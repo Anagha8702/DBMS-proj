@@ -22,6 +22,9 @@ class Customer_Review(models.Model):
             models.UniqueConstraint(fields=['Customer_ID', 'Customer_Review'], name='unique_host_migration'),
         ]
 
+class Car(models.Model):
+    Car_ID= models.IntegerField(primary_key= True)
+
 
     
 

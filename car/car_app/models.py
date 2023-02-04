@@ -52,3 +52,10 @@ class Cylinder(models.Model):
 class Bought_by(models.Model):
     Customer_ID = models.ForeignKey(Customer, on_delete=models.CASCADE)
     Car_ID = models.ForeignKey(Car, on_delete=models.CASCADE)
+
+class Body(models.Model):
+    Body_ID = models.IntegerField(primary_key= True)
+    no_of_doors = models.IntegerField()
+    boot_space = models.IntegerField()
+    ground_clearance = models.IntegerField()
+    body_type = models.CharField(max_length=20)

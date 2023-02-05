@@ -1,8 +1,9 @@
 from django.db import models
+from  django.contrib.auth.models import User
 
 # Create your models here.
 class Admin(models.Model):
-    Admin_ID = models.IntegerField(primary_key= True)
+    Admin_ID = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     Admin_Name= models.CharField(max_length=25)
     address= models.CharField(max_length=100)
     salary= models.FloatField()
@@ -37,7 +38,7 @@ class Car(models.Model):
     Make = models.CharField(max_length=20)
     kerb_weight = models.IntegerField()
     Type=models.CharField(max_length=10)
-    Admin_ID = models.ForeignKey(Admin, on_delete=models.SET_NULL, null=True)
+    Admin_ID =  models.ForeignKey(Admin, on_delete=models.SET_NULL, null=True)
     Engine_ID = models.ForeignKey(Engine, on_delete=models.SET_NULL, null=True)
   
 class Cylinder(models.Model):

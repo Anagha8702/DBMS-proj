@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash 
 from django.contrib import messages 
-from .forms import SignUpForm, EditProfileForm 
+from  django.contrib.auth.models import User
+from .forms import SignUpForm, EditProfileForm
+from .models import Admin
 
 # Create your views here.
 def index(request):
@@ -36,29 +38,53 @@ def register_user(request):
 		form = SignUpForm(request.POST)
 		if form.is_valid():
 			form.save()
+			print(form.cleaned_data['email'])
 			username = form.cleaned_data['username']
 			password = form.cleaned_data['password1']
 			user = authenticate(username=username, password=password)
 			login(request,user)
+			val1 = request.POST['salary']
+			val2 = request.POST['addr']
+			val4 = request.POST['ph']
+			val3 = request.user
+			print(val1,val2,val3)
+			obj = Admin()
+			obj.Admin_ID=val3
+			obj.salary=val1
+			obj.address=val2
+			obj.Phone_no=val4
+			obj.save()
 			messages.success(request, ('Youre now registered'))
 			return redirect('home')
 	else: 
-		form = SignUpForm() 
+		form = SignUpForm()
+	
 
 	context = {'form': form}
 	return render(request, 'authenticate/register.html', context)
 
+
 def edit_profile(request):
 	if request.method =='POST':
-		form = EditProfileForm(request.POST, instance= request.user)
+		form = EditProfileForm(request.POST, instance=request.user) 
 		if form.is_valid():
-			form.save()
+			user_form = form.save()
+			val1 = request.POST['salary']
+			val2 = request.POST['addr']
+			val4 = request.POST['ph']
+			#val3 = request.user
+			admin_obj = Admin.objects.get(Admin_ID_id=request.user)
+			admin_obj.salary = val1
+			admin_obj.Phone_no = val4
+			admin_obj.address = val2
+			admin_obj.save()
 			messages.success(request, ('You have edited your profile'))
 			return redirect('home')
 	else: 		#passes in user information 
-		form = EditProfileForm(instance= request.user) 
-
-	context = {'form': form}
+	
+		form = EditProfileForm(instance= request.user)
+	context = {'form': form,
+	 }
 	return render(request, 'authenticate/edit_profile.html', context)
 	#return render(request, 'authenticate/edit_profile.html',{})
 

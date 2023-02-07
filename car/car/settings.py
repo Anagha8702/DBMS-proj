@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'car_app',
 ]
 
+AUTH_PROFILE_MODULE = "car_app.Admin"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

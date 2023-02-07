@@ -1,27 +1,32 @@
+from msilib.schema import Property
 from django.db import models
 from  django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
+#User.admin = Property(lambda p: Admin.objects.get_or_create(user = p))
+
+
 class Admin(models.Model):
-    Admin_ID = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
-    Admin_Name= models.CharField(max_length=25)
+    Admin_ID = models.OneToOneField(User,on_delete=models.CASCADE,primary_key= True)
     address= models.CharField(max_length=100)
     salary= models.FloatField()
     Phone_no= models.CharField(max_length=14)
+
+'''@receiver(post_save, sender=User)
+def create_admin_profile(sender, instance, created, **kwargs):
+    if created:
+        Admin.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_admin_profile(sender, instance, **kwargs):
+    instance.admin.save()'''
 
 class Customer(models.Model):
     Customer_ID = models.IntegerField(primary_key= True)
     Customer_Name= models.CharField(max_length=25)
     License_No = models.IntegerField()
-
-class Customer_Review(models.Model):
-    Customer_Review= models.CharField(max_length=100)
-    Customer_ID = models.ForeignKey(Customer, on_delete=models.CASCADE)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['Customer_ID', 'Customer_Review'], name='unique_host_migration1'),
-        ]
 
 class Engine(models.Model):
     Engine_ID= models.IntegerField(primary_key= True)
@@ -54,9 +59,15 @@ class Bought_by(models.Model):
     Customer_ID = models.ForeignKey(Customer, on_delete=models.CASCADE)
     Car_ID = models.ForeignKey(Car, on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['Customer_ID', 'Car_ID'], name='unique_host_migration3'),
+        ]
+
 class Body(models.Model):
     Body_ID = models.IntegerField(primary_key= True)
     no_of_doors = models.IntegerField()
     boot_space = models.IntegerField()
     ground_clearance = models.IntegerField()
     body_type = models.CharField(max_length=20)
+    Car_ID = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)

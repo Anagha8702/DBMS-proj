@@ -28,12 +28,32 @@ class Customer(models.Model):
     Customer_Name= models.CharField(max_length=25)
     License_No = models.IntegerField()
 
+class Cylinder(models.Model):
+    id = models.IntegerField(primary_key= True)
+    no_of_cylinders = models.IntegerField()
+    valves_per_cylinder = models.IntegerField()
+    config = models.CharField(max_length=20)
+    class Meta:
+            constraints = [
+                models.UniqueConstraint(fields=['valves_per_cylinder', 'config'], name='unique_host_migration2'),
+            ]
+
+
 class Engine(models.Model):
     Engine_ID= models.IntegerField(primary_key= True)
     cc = models.IntegerField()
     fuel_system_type = models.CharField(max_length=20)
     capacity = models.IntegerField()
     fuel_type = models.CharField(max_length=20)
+    id = models.ForeignKey(Cylinder, on_delete=models.SET_NULL, null=True)
+
+class Body(models.Model):
+    Body_ID = models.IntegerField(primary_key= True)
+    no_of_doors = models.IntegerField()
+    boot_space = models.IntegerField()
+    ground_clearance = models.IntegerField()
+    body_type = models.CharField(max_length=20)
+
 
 class Car(models.Model):
     Car_ID= models.IntegerField(primary_key= True)
@@ -45,15 +65,8 @@ class Car(models.Model):
     Type=models.CharField(max_length=10)
     Admin_ID =  models.ForeignKey(Admin, on_delete=models.SET_NULL, null=True)
     Engine_ID = models.ForeignKey(Engine, on_delete=models.SET_NULL, null=True)
+    Body_ID = models.ForeignKey(Body, on_delete=models.SET_NULL, null=True)
   
-class Cylinder(models.Model):
-    no_of_cylinders = models.IntegerField()
-    valves_per_cylinder = models.IntegerField()
-    config = models.CharField(max_length=20)
-    class Meta:
-            constraints = [
-                models.UniqueConstraint(fields=['valves_per_cylinder', 'config'], name='unique_host_migration2'),
-            ]
 
 class Bought_by(models.Model):
     Customer_ID = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -64,10 +77,5 @@ class Bought_by(models.Model):
             models.UniqueConstraint(fields=['Customer_ID', 'Car_ID'], name='unique_host_migration3'),
         ]
 
-class Body(models.Model):
-    Body_ID = models.IntegerField(primary_key= True)
-    no_of_doors = models.IntegerField()
-    boot_space = models.IntegerField()
-    ground_clearance = models.IntegerField()
-    body_type = models.CharField(max_length=20)
-    Car_ID = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
+
+    

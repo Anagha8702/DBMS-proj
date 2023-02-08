@@ -5,13 +5,13 @@ from django.contrib import messages
 from  django.contrib.auth.models import User
 from .forms import SignUpForm, EditProfileForm
 from .models import Admin
+from .forms import CustomerForm
+from .models import Customer
+from .models import Car
 
 # Create your views here.
 def index(request):
     return render(request, 'sample.html')
-
-def home(request):
-    return render(request, 'authenticate/home.html')
 
 def login_user (request):
 	if request.method == 'POST': #if someone fills out form , Post it 
@@ -103,3 +103,41 @@ def change_password(request):
 
 	context = {'form': form}
 	return render(request, 'authenticate/change_password.html', context)
+
+
+def customer_view(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            lisence = form.cleaned_data.get('lisence')
+            Customer.objects.create(Customer_Name=name, License_No=lisence)
+            messages.success(request,("New customer added successfully"))
+            return redirect('home')
+    else:
+        form = CustomerForm()
+    return render(request, 'customer.html', {'form': form})
+
+# cylinder -> engine , body, Car
+def add_car(request):
+    return render(request, 'sample.html')
+
+def update(request):
+    if request.method == 'POST':
+        val = request.POST.get('form1')
+        if val=='form1':
+            id = request.POST.get('car_id')
+            car_obj = Car.objects.get(Car_ID_id=id)
+            
+            
+        return render(request, 'update.html')
+    else:
+        return render(request, 'update.html')
+
+def home(request):
+    if request.user.is_authenticated:
+        admin_obj = Admin.objects.get(Admin_ID_id=request.user)
+        context = {'sal': admin_obj.salary, 'addr': admin_obj.address, 'phone': admin_obj.Phone_no}
+        return render(request, 'authenticate/home.html',context)
+    else:
+        return render(request, 'authenticate/home.html')

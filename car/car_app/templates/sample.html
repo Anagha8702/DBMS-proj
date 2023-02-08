@@ -1,11 +1,218 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Home Page</h1>
-    <p>This page is rendered as a Django Template</p>
-    <h3>Happy Learning :)</h3>
-</body>
-</html>
+{% extends 'authenticate/base.html' %}
+{% block content %}
+
+<form>
+    <div class ="sec">
+    <legend>Section 1</legend>
+    <div class="row">
+      <div class="col">
+        <label for="col1-row1">Model</label>
+        <input type="text" name="Model" class='form-control' placeholder="">
+      </div>
+      <div class="col">
+        <label for="col2-row1">Variant</label>
+        <input type="text" name="Variant" class='form-control' placeholder="">
+      </div>
+      <div class="col">
+        <label for="col3-row1">Mileage</label>
+        <input type="text" name="Mileage" class='form-control' placeholder="">
+      </div>
+      <div class="col">
+        <label for="col4-row1">Make</label>
+        <input type="text" name="Make" class='form-control' placeholder="">
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="col1-row2">kerb weight</label>
+            <input type="text" name="kerb_weight" class='form-control' placeholder="">
+          </div>
+          <div class="col">
+            <label for="col2-row2">Type</label>
+            <input type="text" name="Type" class='form-control' placeholder="">
+          </div>
+          <div class="col">
+            <label for="col3-row2">No of Doors</label>
+            <input type="text" name="No_of_Doors" class='form-control' placeholder="">
+          </div>
+          <div class="col">
+            <label for="col4-row2">Boot Space</label>
+            <input type="text" name="Boot_Space" class='form-control' placeholder="">
+          </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="col1-row3">Body Type</label>
+            <input type="text" name="Body_Type" placeholder="" class='form-control'>
+          </div>
+          <div class="col">
+            <label for="col2-row3">Ground Clearance</label>
+            <input type="text" name="Ground_Clearance" placeholder="" class='form-control'>
+          </div>
+          <div class="col">
+            <label for="col3-row3">Column 3, Row 2</label>
+            <input type="text" name="col3-row3" class='form-control' placeholder="">
+          </div>
+          <div class="col">
+            <label for="col4-row3">Column 4, Row 2</label>
+            <input type="text" class='form-control' id="col4-row3" placeholder="">
+          </div>
+    </div>
+    </div>
+    <div class ="sec">
+        <legend>Section 2</legend>
+        <div class="row">
+          <div class="col">
+            <label for="col1-row1">Model</label>
+            <input type="text" id="col1-row1" class='form-control' placeholder="">
+          </div>
+          <div class="col">
+            <label for="col2-row1">Variant</label>
+            <input type="text" id="col2-row1" class='form-control' placeholder="">
+          </div>
+          <div class="col">
+            <label for="col3-row1">Mileage</label>
+            <input type="text" id="col3-row1" class='form-control' placeholder="">
+          </div>
+          <div class="col">
+            <label for="col4-row1">Make</label>
+            <input type="text" id="col4-row1" class='form-control' placeholder="">
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="col1-row2">kerb weight</label>
+                <input type="text" id="col1-row2" class='form-control' placeholder="">
+              </div>
+              <div class="col">
+                <label for="col2-row2">Type</label>
+                <input type="text" id="col2-row2" class='form-control' placeholder="">
+              </div>
+              <div class="col">
+                <label for="col3-row2">No of Doors</label>
+                <input type="text" id="col3-row2" class='form-control' placeholder="">
+              </div>
+              <div class="col">
+                <label for="col4-row2">Boot Space</label>
+                <input type="text" id="col4-row2" class='form-control' placeholder="">
+              </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="col1-row3">Body Type</label>
+                <input type="text" id="col1-row3" placeholder="" class='form-control'>
+              </div>
+              <div class="col">
+                <label for="col2-row3">Ground Clearance</label>
+                <input type="text" id="col2-row3" placeholder="" class='form-control'>
+              </div>
+              <div class="col">
+                <label for="col3-row3">Column 3, Row 2</label>
+                <input type="text" id="col3-row3" class='form-control' placeholder="">
+              </div>
+              <div class="col">
+                <label for="col4-row3">Column 4, Row 2</label>
+                <input type="text" class='form-control' id="col4-row3" placeholder="">
+              </div>
+        </div>
+        </div>
+        <div class ="sec">
+            <legend>Section 3</legend>
+            <div class="row">
+              <div class="col">
+                <label for="col1-row1">Model</label>
+                <input type="text" id="col1-row1" class='form-control' placeholder="">
+              </div>
+              <div class="col">
+                <label for="col2-row1">Variant</label>
+                <input type="text" id="col2-row1" class='form-control' placeholder="">
+              </div>
+              <div class="col">
+                <label for="col3-row1">Mileage</label>
+                <input type="text" id="col3-row1" class='form-control' placeholder="">
+              </div>
+              <div class="col">
+                <label for="col4-row1">Make</label>
+                <input type="text" id="col4-row1" class='form-control' placeholder="">
+              </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="col1-row2">kerb weight</label>
+                    <input type="text" id="col1-row2" class='form-control' placeholder="">
+                  </div>
+                  <div class="col">
+                    <label for="col2-row2">Type</label>
+                    <input type="text" id="col2-row2" class='form-control' placeholder="">
+                  </div>
+                  <div class="col">
+                    <label for="col3-row2">No of Doors</label>
+                    <input type="text" id="col3-row2" class='form-control' placeholder="">
+                  </div>
+                  <div class="col">
+                    <label for="col4-row2">Boot Space</label>
+                    <input type="text" id="col4-row2" class='form-control' placeholder="">
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="col1-row3">Body Type</label>
+                    <input type="text" id="col1-row3" placeholder="" class='form-control'>
+                  </div>
+                  <div class="col">
+                    <label for="col2-row3">Ground Clearance</label>
+                    <input type="text" id="col2-row3" placeholder="" class='form-control'>
+                  </div>
+                  <div class="col">
+                    <label for="col3-row3">Column 3, Row 2</label>
+                    <input type="text" id="col3-row3" class='form-control' placeholder="">
+                  </div>
+                  <div class="col">
+                    <label for="col4-row3">Column 4, Row 2</label>
+                    <input type="text" class='form-control' id="col4-row3" placeholder="">
+                  </div>
+            </div>
+            </div>
+  </form>
+    <input type="submit" value="Add Engine" class=" btn btn-secondary">
+    
+  <style>
+    form {
+  width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+sec{
+
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 30px;
+  background-color: #fff;
+}
+.row {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+  </style>
+  {% endblock %}

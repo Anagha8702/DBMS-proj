@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <title>Hello, world!</title>
   </head>
   <body>
@@ -23,20 +23,22 @@
       {# Will know if user is logged in or not#}
       {% if user.is_authenticated %}
 
+      
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
-      </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'add_car' %}">Add Car</a>
+        <a class="nav-link" href="{% url 'add_car' %}">Add</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'update' %}">Update</a>
       </li>
-
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'edit_profile' %}">Profile</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
       
       
       {% else %}
@@ -79,3 +81,143 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
+
+<style>
+  @charset "UTF-8";
+#stars_rating {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#stars_rating .stars {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  max-width: 360px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: -8px;
+}
+#stars_rating .stars1 {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  max-width: 360px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: -8px;
+}
+#stars_rating .stars .star {
+  position: relative;
+  color: #ccf;
+  font-size: 48px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+#stars_rating .stars .star:after {
+  content: "★";
+  position: absolute;
+  transform: translateX(-100%);
+  top: 0px;
+  font-size: 48px;
+}
+@media (min-width: 768px) {
+  #stars_rating .stars .star {
+    padding: 0 7px;
+    font-size: 64px;
+  }
+  #stars_rating .stars .star:after {
+    font-size: 64px;
+  }
+}
+@media (max-width: 479px) {
+  #stars_rating .stars .star {
+    padding: 0 3px;
+    font-size: 36px;
+  }
+  #stars_rating .stars .star:after {
+    font-size: 36px;
+  }
+}
+#stars_rating .stars .star.rated {
+  color: royalblue;
+}
+#stars_rating .stars .star.rated:before {
+  color: darkblue;
+  content: "★";
+  position: absolute;
+  left: -1.5px;
+  top: -13px;
+  font-size: 64px;
+}
+@media (min-width: 768px) {
+  #stars_rating .stars .star.rated:before {
+    left: 0px;
+    top: -14.5px;
+    font-size: 80px;
+  }
+}
+@media (max-width: 479px) {
+  #stars_rating .stars .star.rated:before {
+    left: -2px;
+    top: -10px;
+    font-size: 48px;
+  }
+}
+#stars_rating .stars:hover .star {
+  color: royalblue;
+}
+#stars_rating .stars:hover .star:hover ~ * {
+  color: #ccf;
+}
+#stars_rating .stars.rated .star:before {
+  color: darkblue;
+  content: "★";
+  position: absolute;
+  left: -1.5px;
+  top: -13px;
+  font-size: 64px;
+}
+@media (min-width: 768px) {
+  #stars_rating .stars.rated .star:before {
+    left: 0px;
+    top: -14.5px;
+    font-size: 80px;
+  }
+}
+@media (max-width: 479px) {
+  #stars_rating .stars.rated .star:before {
+    left: -2px;
+    top: -10px;
+    font-size: 48px;
+  }
+}
+#stars_rating .stars.rated .star:after {
+  color: royalblue;
+}
+#stars_rating .stars.rated .star.rated ~ *:before {
+  display: none;
+}
+#stars_rating .stars.rated .star.rated ~ *:after {
+  color: #ccf;
+}
+#stars_rating .stars.rated:hover .star {
+  color: royalblue;
+}
+#stars_rating .stars.rated:hover .star:after {
+  color: royalblue;
+}
+#stars_rating .stars.rated:hover .star:hover ~ * {
+  color: #ccf;
+}
+#stars_rating .stars.rated:hover .star:hover ~ *:after {
+  color: #ccf;
+}
+
+</style>

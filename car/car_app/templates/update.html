@@ -1,37 +1,122 @@
 {% extends 'authenticate/base.html' %}
 {% block content %}
 
-<h3 class ="text-center">Enter Car ID</h3>
-<div class = "col-md-6 offset-md-3"> 
+
 	<form method ="POST">
 		{% csrf_token %}
+
+    {% if error %}
+		<div class="alert alert-danger alart-dismissable" role ="alert">
+                <button class="close" data-dismiss="alert">
+                    <small><sup>x</sup></small>
+                  </button>
+               		{{errormsg}}
+                </div>
+      {% endif%}
+      <h3 class ="text-center">Enter Car ID</h3>
+      <div class = "col-md-6 offset-md-3"> 
 	  <div class="form-group">
 	    <input type="text" class="form-control" placeholder="Enter Car ID" name = "car_id">
 	  </div>
       <input type="hidden" id="1" name="form1" value="form1">
       <button type="submit" class="btn btn-secondary">Search</button>
       </form>
+      </div>
       <!--FORM FOR UPDATION-->
-      <form>
-        <div class ="sec">
-        <legend>Section 1</legend>
-        <div class="row">
-          <div class="col">
-            <label for="col1-row1">Model</label>
-            <input type="text" id="col1-row1" class='form-control' placeholder="">
+      {% if show %}
+      <form method="POST">
+        {% csrf_token %}
+          <div class ="sec">
+          <h3 class ="text-center">Model & Body</h3>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="col1-row1">Model</label>
+              <input type="text" name="Model" class='form-control' value={{Model}}>
+            </div>
+            <div class="col">
+              <label for="col2-row1">Variant</label>
+              <input type="text" name="variant" class='form-control' value={{variant}}>
+            </div>
+            <div class="col">
+              <label for="col3-row1">Mileage</label>
+              <input type="text" name="Mileage" class='form-control' value={{Mileage}}>
+            </div>
+            <div class="col">
+              <label for="col4-row1">Make</label>
+              <input type="text" name="Make" class='form-control' value={{Make}}>
+            </div>
           </div>
-          <div class="col">
-            <label for="col2-row1">Variant</label>
-            <input type="text" id="col2-row1" class='form-control' placeholder="">
+          <div class="row">
+              <div class="col">
+                  <label for="col1-row2">kerb weight</label>
+                  <input type="number" name="kerb_weight" class='form-control' value={{kerb_weight}}>
+                </div>
+                <div class="col">
+                  <label for="col2-row2">Type</label>
+                  <input type="text" name="Type" class='form-control' value={{Type}}>
+                </div>
+                <div class="col">
+                  <label for="col3-row2">No of Doors</label>
+                  <input type="number" name="no_of_doors" class='form-control' value={{no_of_doors}}>
+                </div>
+                <div class="col">
+                  <label for="col4-row2">Boot Space</label>
+                  <input type="number" name="Boot_Space" class='form-control' value={{boot_space}}>
+                </div>
           </div>
-          <div class="col">
-            <label for="col3-row1">Mileage</label>
-            <input type="text" id="col3-row1" class='form-control' placeholder="">
+          <div class="row">
+              <div class="col">
+                  <label for="col1-row3">Body Type</label>
+                  <input type="text" name="Body_Type" value={{body_type}} class='form-control'>
+                </div>
+                <div class="col">
+                  <label for="col2-row3">Ground Clearance</label>
+                  <input type="number" name="Ground_Clearance" value={{ground_clearance}} class='form-control'>
+                </div>
           </div>
-          <div class="col">
-            <label for="col4-row1">Make</label>
-            <input type="text" id="col4-row1" class='form-control' placeholder="">
           </div>
-        </div> </div>
+          <br><br>
+          <div class ="sec">
+              <h3 class ="text-center">Engine & Cylinder</h3>
+              <br>
+              <div class="row">
+                <div class="col">
+                  <label for="col1-row1">cc</label>
+                  <input type="number" name="cc" class='form-control' value={{cc}}>
+                </div>
+                <div class="col">
+                  <label for="col2-row1">Fuel System Type</label>
+                  <input type="text" name="fuel_system_type" class='form-control' value={{fuel_system_type}}>
+                </div>
+                <div class="col">
+                  <label for="col3-row1">Capacity</label>
+                  <input type="number" name="capacity" class='form-control' value={{fcapacity}}>
+                </div>
+                <div class="col">
+                  <label for="col4-row1">Fuel Type</label>
+                  <input type="text" name="fuel_type" class='form-control' value={{fuel_type}}>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+                      <label for="col1-row2">No of Cylinders</label>
+                      <input type="number" name="no_of_cylinders" class='form-control' value={{no_of_cylinders}}>
+                    </div>
+                    <div class="col">
+                      <label for="col2-row2">Valves per Cylinder</label>
+                      <input type="number" name="valves_per_cylinder" class='form-control' value={{valves_per_cylinder}}>
+                    </div>
+                    <div class="col">
+                      <label for="col3-row2">Configuration</label>
+                      <input type="text" name="config" class='form-control' value={{config}}>
+                    </div> 
+              </div>
+              </div>  
+              <input type="hidden" id="1" name="form1" value="form2">
+              <input type="hidden" id="1" name="cid" value={{cid}}>
+              <button type="submit" value="Add Car" class="btn btn-secondary">Update Car</button>
+        </form>
+        {% endif %}
         
 {% endblock %}

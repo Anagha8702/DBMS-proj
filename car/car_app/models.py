@@ -14,19 +14,13 @@ class Admin(models.Model):
     salary= models.FloatField()
     Phone_no= models.CharField(max_length=14)
 
-'''@receiver(post_save, sender=User)
-def create_admin_profile(sender, instance, created, **kwargs):
-    if created:
-        Admin.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_admin_profile(sender, instance, **kwargs):
-    instance.admin.save()'''
 
 class Customer(models.Model):
     Customer_ID = models.IntegerField(primary_key= True)
     Customer_Name= models.CharField(max_length=25)
     License_No = models.IntegerField()
+    age = models.IntegerField()
+    gender = models.CharField(max_length=1)
 
 class Cylinder(models.Model):
     id = models.IntegerField(primary_key= True)

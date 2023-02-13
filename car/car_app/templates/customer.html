@@ -1,38 +1,133 @@
-<style>
-    form {
-      width: 50%;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-    }
-    label {
-      font-weight: bold;
-    }
-    input[type="text"], input[type="email"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button[type="submit"] {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button[type="submit"]:hover {
-      background-color: #3e8e41;
-    }
-  </style>
+{% extends 'authenticate/base.html' %}
+{% block content %}
 
+<div class = "col-md-6 offset-md-3"> 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <input type="hidden" id="1" name="add_car_review" value="add_car_review">
+    <button type="submit" class="btn btn-secondary">+ Car Review</button>
   </form>
-  
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="stars_rating">
+              <p class="heading">Performance</p>
+              <div class="stars">
+                <div class="star star1">★</div>
+                <div class="star star1">★</div>
+                <div class="star star1">★</div>
+                <div class="star star1">★</div>
+                <div class="star star1">★</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="stars_rating">
+              <p class="heading">Comfort</p>
+              <div class="stars">
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="stars_rating">
+              <p class="heading">Reliability</p>
+              <div class="stars">
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="stars_rating">
+              <p class="heading">Features</p>
+              <div class="stars">
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="stars_rating">
+              <p class="heading">Affordablity</p>
+              <div class="stars">
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form method="post">
+    <button type="submit" class="btn btn-secondary">Submit</button>
+  </form>
+
+  <script>
+    let _rating1 = 0; // [0..5]
+const setRating1 = (num) => {
+  _rating1 = num;
+};
+const getRate1 = () => {
+  if (_rating1) {
+    return _rating1 * 1.0;
+  }
+  return "(unrated)";
+};
+const stars1= document.querySelectorAll(".star1");
+$(".star1").on("click", function (e) {
+  stars1.forEach((star1, i) => {
+    if (star1 === e.currentTarget) {
+      setRating1(i + 1);
+      if ($(".star1.rated").length) {
+        $(".star1.rated").removeClass("rated");
+      }
+      e.currentTarget.classList.add("rated");
+      $(".stars").addClass("rated");
+    }
+  });
+});
+  </script>
+  {% endblock %}

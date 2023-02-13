@@ -42,5 +42,12 @@ class SignUpForm(UserCreationForm):
 
 
 class CustomerForm(forms.Form):
-    name = forms.CharField(label='Your Name', max_length=100)
-    lisence = forms.IntegerField(label=' Lisence NUmber')
+	CHOICES =(
+	(" ", " "),
+    ("F", "F"),
+    ("M", "M"),
+)
+	name = forms.CharField(label='Your Name', max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Name'}),)
+	lisence = forms.IntegerField(label=' License Number', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'License No'}),)
+	age = forms.IntegerField(label='Age', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Age'}),)
+	gender = forms.ChoiceField(label='Gender',choices = CHOICES, widget=forms.Select(choices = CHOICES,attrs={'class':'form-control'}),)

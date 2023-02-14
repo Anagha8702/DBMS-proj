@@ -4,90 +4,41 @@
 <div class = "col-md-6 offset-md-3"> 
 <form method="post">
     {% csrf_token %}
+    {% if error %}
+		<div class="alert alert-danger alart-dismissable" role ="alert">
+                <button class="close" data-dismiss="alert">
+                    <small><sup>x</sup></small>
+                  </button>
+               		{{errormsg}}
+                </div>
+      {% endif%}
     {{ form.as_p }}
     <input type="hidden" id="1" name="add_car_review" value="add_car_review">
     <button type="submit" class="btn btn-secondary">+ Car Review</button>
   </form>
   </div>
+<br><br>
+{% if show %}
+  <form method="post">
+    {% csrf_token %}
+    <div class = "col-md-6 offset-md-3">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Enter Make" name = "Make">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter Model" name = "Model">
+        </div>
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter Variant" name = "Variant">
+          </div>
+        </div>
   <div class="container">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-md-6 offset-md-3">
         <div class="card">
           <div class="card-body">
             <div id="stars_rating">
-              <p class="heading">Performance</p>
-              <div class="stars">
-                <div class="star star1">★</div>
-                <div class="star star1">★</div>
-                <div class="star star1">★</div>
-                <div class="star star1">★</div>
-                <div class="star star1">★</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-body">
-            <div id="stars_rating">
-              <p class="heading">Comfort</p>
-              <div class="stars">
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-body">
-            <div id="stars_rating">
-              <p class="heading">Reliability</p>
-              <div class="stars">
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-body">
-            <div id="stars_rating">
-              <p class="heading">Features</p>
-              <div class="stars">
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-                <div class="star">★</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <div class="card-body">
-            <div id="stars_rating">
-              <p class="heading">Affordablity</p>
+              <p class="heading">Rating</p>
               <div class="stars">
                 <div class="star">★</div>
                 <div class="star">★</div>
@@ -101,33 +52,48 @@
       </div>
     </div>
   </div>
-  <form method="post">
+  <br><br>
+  <div class="form-group">
+  <textarea textarea="" class="form-control" placeholder="Write your review" id="comment" name="review" cols="145" rows="5" maxlength="65525"></textarea>
+  </div>
+  <input type="hidden" id="rate" name="rating" value="0">
+  <input type="hidden" id="1" name="add_car_review" value="car_review">
     <button type="submit" class="btn btn-secondary">Submit</button>
   </form>
+{% endif %}
 
   <script>
-    let _rating1 = 0; // [0..5]
-const setRating1 = (num) => {
-  _rating1 = num;
+   let _rating = 0; // [0..5]
+const setRating = num => {
+  _rating = num;
 };
-const getRate1 = () => {
-  if (_rating1) {
-    return _rating1 * 1.0;
+
+const getRate = () => {
+  if (_rating) {
+    return _rating * 1.0;
   }
-  return "(unrated)";
+  return 0;
 };
-const stars1= document.querySelectorAll(".star1");
-$(".star1").on("click", function (e) {
-  stars1.forEach((star1, i) => {
-    if (star1 === e.currentTarget) {
-      setRating1(i + 1);
-      if ($(".star1.rated").length) {
-        $(".star1.rated").removeClass("rated");
+q=(e,n=document)=>n.getElementById("rate");
+const stars = document.querySelectorAll('.star');
+let count;
+$('.star').on('click', function (e) {
+  count = getRate();
+  q('input#rating').value=count;
+  console.log(count)
+  stars.forEach((star, i) => {
+    if (star === e.currentTarget) {
+      setRating(i + 1); 
+      if ($('.star.rated').length) {
+        $('.star.rated').removeClass('rated');
       }
-      e.currentTarget.classList.add("rated");
-      $(".stars").addClass("rated");
+      e.currentTarget.classList.add('rated');
+      $('.stars').addClass('rated');
     }
   });
 });
+
+
+
   </script>
   {% endblock %}

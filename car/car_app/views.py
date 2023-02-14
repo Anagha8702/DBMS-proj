@@ -4,9 +4,8 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib import messages 
 from  django.contrib.auth.models import User
 from .forms import SignUpForm, EditProfileForm
-from .models import Admin, Car, Body, Cylinder, Engine
+from .models import Admin, Car, Body, Cylinder, Engine, Customer, Bought_by
 from .forms import CustomerForm
-from .models import Customer
 
 
 # Create your views here.
@@ -103,6 +102,7 @@ def change_password(request):
 
 
 def customer_view(request):
+	global customer_obj
 	if request.method == 'POST':
 		val = request.POST.get('add_car_review')
 		if val == 'add_car_review':
@@ -112,16 +112,27 @@ def customer_view(request):
 				license = form.cleaned_data.get('lisence')
 				age1 = form.cleaned_data.get('age')
 				gender1 = form.cleaned_data.get('gender')
-				customer_obj = Body.objects.filter(Customer_Name=name,License_No=license,age = age1,gender = gender1).first()
+				customer_obj = Customer.objects.filter(Customer_Name=name,License_No=license,age = age1,gender = gender1).first()
 				if customer_obj==None:
 					Customer.objects.create(Customer_Name=name, License_No=license, age = age1,gender = gender1)
 					messages.success(request,("New customer added successfully"))
-				#form1 = Reviewform()
-				return render(request, 'customer.html', {'form': form})
-	
+				return render(request, 'customer.html', {'form': form, 'show':1})
+		elif val == 'car_review':
+			form = CustomerForm()
+			rate = request.POST.get('rating')
+			model = request.POST.get('Model')
+			variant = request.POST.get('Variant')
+			make = request.POST.get('Make')
+			review = request.POST.get('review')
+			print(customer_obj)
+			car_obj = Car.objects.filter(Make=make,variant=variant,Model=model).first()
+			if car_obj==None:
+				return render(request, 'customer.html',{'form': form, 'show':0,'error':1,'errormsg':"Register Car Details First"})		
+			bought_by_obj = Bought_by.objects.create(Car_ID=car_obj,Customer_ID=customer_obj,rating=rate)
+			return render(request, 'customer.html', {'form': form, 'show':0})
 	else:
 		form = CustomerForm()
-		return render(request, 'customer.html', {'form': form})
+		return render(request, 'customer.html', {'form': form, 'show':0})
 	
 
 # cylinder -> engine , body, Car

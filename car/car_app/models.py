@@ -65,6 +65,7 @@ class Car(models.Model):
 class Bought_by(models.Model):
     Customer_ID = models.ForeignKey(Customer, on_delete=models.CASCADE)
     Car_ID = models.ForeignKey(Car, on_delete=models.CASCADE)
+    rating = models.IntegerField()
 
     class Meta:
         constraints = [
@@ -72,4 +73,3 @@ class Bought_by(models.Model):
         ]
 
 
-    

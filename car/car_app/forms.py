@@ -6,11 +6,17 @@ from django.forms import ModelForm
 from .models import Admin,Car
 
 class EditProfileForm(UserChangeForm):
-	password = forms.CharField(label="", widget=forms.TextInput(attrs={'type':'hidden'}))
+	password = forms.CharField(label="", widget=forms.TextInput(attrs={'type':'hidden','class':'form-control'}))
 	class Meta:
 		model = User
-		#excludes private information from User
 		fields = ('username', 'first_name', 'last_name', 'email','password',)
+	
+	def __init__(self, *args, **kwargs):
+		super(EditProfileForm, self).__init__(*args, **kwargs)
+		self.fields['username'].widget.attrs['class'] = 'form-control'
+		self.fields['first_name'].widget.attrs['class'] = 'form-control'
+		self.fields['last_name'].widget.attrs['class'] = 'form-control'
+		self.fields['email'].widget.attrs['class'] = 'form-control'
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}),)

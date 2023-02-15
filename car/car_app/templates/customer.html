@@ -13,6 +13,7 @@
                 </div>
       {% endif%}
     {{ form.as_p }}
+    
     <input type="hidden" id="1" name="add_car_review" value="add_car_review">
     <button type="submit" class="btn btn-secondary">+ Car Review</button>
   </form>
@@ -58,6 +59,7 @@
   </div>
   <input type="hidden" id="rate" name="rating" value="0">
   <input type="hidden" id="1" name="add_car_review" value="car_review">
+  <input type="hidden" id="1" name="cid" value={{cid}}>
     <button type="submit" class="btn btn-secondary">Submit</button>
   </form>
 {% endif %}

@@ -6,7 +6,8 @@ from  django.contrib.auth.models import User
 from .forms import SignUpForm, EditProfileForm
 from .models import Admin, Car, Body, Cylinder, Engine, Customer, Bought_by
 from .forms import CustomerForm
-
+import firebase_admin
+from firebase_admin import credentials,db,firestore
 
 # Create your views here.
 def login_user (request):
@@ -14,7 +15,7 @@ def login_user (request):
 		username = request.POST['username']
 		password = request.POST['password']
 		user = authenticate(request, username=username, password=password)
-		if user is not None:# if user exist
+		if user is not None: #if user exist
 			login(request, user)
 			messages.success(request,('Youre logged in'))
 			return redirect('home') #routes to 'home' on successful login  
@@ -115,8 +116,10 @@ def customer_view(request):
 				customer_obj = Customer.objects.filter(Customer_Name=name,License_No=license,age = age1,gender = gender1).first()
 				if customer_obj==None:
 					Customer.objects.create(Customer_Name=name, License_No=license, age = age1,gender = gender1)
+					customer_obj = Customer.objects.filter(Customer_Name=name,License_No=license,age = age1,gender = gender1).first()
+					print(customer_obj)
 					messages.success(request,("New customer added successfully"))
-				return render(request, 'customer.html', {'form': form, 'show':1})
+				return render(request, 'customer.html', {'form': form, 'show':1, 'cid':customer_obj.Customer_ID})
 		elif val == 'car_review':
 			form = CustomerForm()
 			rate = request.POST.get('rating')
@@ -124,11 +127,26 @@ def customer_view(request):
 			variant = request.POST.get('Variant')
 			make = request.POST.get('Make')
 			review = request.POST.get('review')
-			print(customer_obj)
+			print("cid",request.POST.get('cid'))
+			customer_obj1 = Customer.objects.filter(Customer_ID = request.POST.get('cid')).first()
+			print(customer_obj1)
 			car_obj = Car.objects.filter(Make=make,variant=variant,Model=model).first()
 			if car_obj==None:
 				return render(request, 'customer.html',{'form': form, 'show':0,'error':1,'errormsg':"Register Car Details First"})		
-			bought_by_obj = Bought_by.objects.create(Car_ID=car_obj,Customer_ID=customer_obj,rating=rate)
+			bought_by_obj = Bought_by.objects.create(Car_ID=car_obj,Customer_ID=customer_obj1,rating=rate)
+			try:
+				cred = credentials.Certificate("C:\\Users\\Anagha Anand\\Documents\\DBMS_PROJECT\\car\\car_app\\a.json")
+				firebase_admin.initialize_app(cred, {'databaseURL': 'https://cardata-413aa-default-rtdb.asia-southeast1.firebasedatabase.app'})
+				ref = db.reference("/Data")
+				ref.push({
+				car_obj.Car_ID: review
+				})
+			except:
+				ref = db.reference("/Data")
+				ref.push({
+				car_obj.Car_ID: review
+				})
+			#ref = db.reference()
 			return render(request, 'customer.html', {'form': form, 'show':0})
 	else:
 		form = CustomerForm()
@@ -166,7 +184,7 @@ def add_car(request):
 		obj1 = Car()
 		obj1.variant = request.POST['variant']
 		obj1.Model = request.POST['Model']
-		obj1.Make = request.POST['Model']
+		obj1.Make = request.POST['Make']
 		obj1.kerb_weight = request.POST['kerb_weight']
 		obj1.Type = request.POST['Type']
 		obj1.Mileage = request.POST['Mileage']

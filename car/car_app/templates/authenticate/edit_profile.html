@@ -11,7 +11,7 @@
 		      <div class="alert alert-danger alart-dismissable" role ="alert">
                 <button class="close" data-dismiss="alert">
                     <small><sup>x</sup></small>
-                  </button>
+                </button>
                {% for field in form %}
                	{% if field.errors %}
                		{{ field.errors }}
@@ -19,12 +19,15 @@
                	{% endfor %}
               </div>
 			  {% endif %}
+			  <div class = "col-md-6 offset-md-3"> 
 			  {{ form.as_p }}
-  			  {{profile_form.as_p}}
-			Salary: <input type="number" name="salary"/><br/>
-			Address: <input type="text" name="addr"/>
-			Phone Number: <input type="text" name="ph"/>
+			  
+			Salary: <input type="number" class="form-control" name="salary"/><br/>
+			Address: <input type="text" class="form-control" name="addr"/>
+			Phone Number: <input type="text" class="form-control" name="ph"/>
+		<br>
 			<input type="submit" value="Edit Profile" class=" btn btn-secondary">
+		</div>
 	    <p><small><a href="{% url 'change_password'%}">Click here</a> to change your password</small></p> 
 	</form>
 

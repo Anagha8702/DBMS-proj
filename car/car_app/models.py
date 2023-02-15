@@ -4,9 +4,6 @@ from  django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
-#User.admin = Property(lambda p: Admin.objects.get_or_create(user = p))
-
 
 class Admin(models.Model):
     Admin_ID = models.OneToOneField(User,on_delete=models.CASCADE,primary_key= True)

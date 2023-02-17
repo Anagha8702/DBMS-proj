@@ -30,6 +30,10 @@ def logout_user(request):
 	messages.success(request,('Youre now logged out'))
 	return redirect('home')
 
+def report_powerbi(request):
+	
+	return redirect('powerbi')
+
 def register_user(request):
 	if request.method =='POST':
 		form = SignUpForm(request.POST)

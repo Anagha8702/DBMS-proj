@@ -10,4 +10,5 @@ urlpatterns = [
     path('customer/', views.customer_view, name='customer_view'),
     path('add_car/', views.add_car, name='add_car'),
     path('update/', views.update, name='update'),
+    path('powerbi/', views.update, name='powerbi'),
 ]

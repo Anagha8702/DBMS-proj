@@ -1,45 +1,129 @@
 {% extends 'authenticate/base.html' %}
 {% block content %}
-
-<div class = "col-md-6 offset-md-3"> 
-<form method="post">
-    {% csrf_token %}
-    {% if error %}
-		<div class="alert alert-danger alart-dismissable" role ="alert">
-                <button class="close" data-dismiss="alert">
+{% load static %}
+<div class="container-fluid position-relative p-0">
+  <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+    <a href="{% url 'home' %}" class="navbar-brand p-0">
+        <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Carz</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+            <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+          
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Statistics</a>
+                <div class="dropdown-menu m-0">
+                    <a href="{% url 'home' %}" class="dropdown-item">Power BI</a>
+                    <a href="{% url 'home' %}" class="dropdown-item">Personalize Power BI</a>
+                    <a href="{% url 'home' %}" class="dropdown-item">Custom</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Update</a>
+                <div class="dropdown-menu m-0">
+                    <a href="{% url 'add_car' %}" class="dropdown-item">Add Car</a>
+                    <a href="{% url 'update' %}" class="dropdown-item">Update Car</a>
+                    <a href="{% url 'customer_view' %}" class="dropdown-item">Customer Review</a>
+                </div>
+            </div>
+            <a href="{% url 'edit_profile' %}" class="nav-item nav-link">Profile</a>
+  <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+        </div>
+      
+    </div>
+</nav>
+</div>
+<div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+  <div class="row py-5">
+    <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+      <h1 class="display-4 text-white animated zoomIn">Customer Review</h1>
+      <a href="" class="h5 text-white">Home</a>
+      <i class="far fa-circle text-white px-2"></i>
+      <a href="" class="h5 text-white">Customer Review</a>
+    </div>
+  </div>
+</div>
+</div>
+{% if messages %}
+<div class ="container">
+    {% for message in messages %}
+      <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+          <button class="btn-close" data-dismiss="alert">
+              <small><sup>x</sup></small>
+            </button>
+          {{ message }}
+        </div>
+      {% endfor%}
+    {% endif %}
+{% if error %}
+		<div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+                <button class="btn-close" data-dismiss="alert">
                     <small><sup>x</sup></small>
                   </button>
                		{{errormsg}}
                 </div>
       {% endif%}
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+	<div class="container py-5">
+		<div class="row g-5">
+      <div class="col-lg-7">
+				<div class="section-title position-relative pb-3 mb-5">
+					<h5 class="fw-bold text-primary text-uppercase">Customer Review</h5>
+					<h1 class="mb-0">Please enter customer details</h1>
+				</div>
+				<div class="row gx-3">
+					<div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+						<h5 class="mb-4"><i class="fa fa-reply text-primary me-3"></i>Interact with car experts</h5>
+					</div>
+					<div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+						<h5 class="mb-4"><i class="fa fa-phone-alt text-primary me-3"></i>Provide feedback</h5>
+					</div>
+				</div>
+        </div>  
+<div class="col-lg-5">
+  <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" style="justify-content: center;" data-wow-delay="0.9s">
+<form method="post">
+  <div class="row g-3">
+    {% csrf_token %}
+    <div class="col-xl-12">
     {{ form.as_p }}
-    
+  </div>
     <input type="hidden" id="1" name="add_car_review" value="add_car_review">
-    <button type="submit" class="btn btn-secondary">+ Car Review</button>
+    <button type="submit" class="btn btn-outline-light w-100 py-3">+ Car Review</button>
+  </div>
   </form>
   </div>
+  </div>
+</div>
+</div>
+</div>
 <br><br>
 {% if show %}
+<div style="justify-content: center; display: flex;">
+  <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
   <form method="post">
     {% csrf_token %}
     <div class = "col-md-6 offset-md-3">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Enter Make" name = "Make">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Enter Model" name = "Model">
+    
+      <input type="text" class="form-control  bg-light border-0"  style="height: 55px;"  placeholder="Enter Make" name = "Make">
+      <br>
+      
+        <input type="text" class="form-control  bg-light border-0"  style="height: 55px;"  placeholder="Enter Model" name = "Model">
+        <br>
+      
+        <input type="text" class="form-control bg-light border-0"  style="height: 55px;" placeholder="Enter Variant" name = "Variant">
+          <br>
         </div>
-      <div class="form-group">
-          <input type="text" class="form-control" placeholder="Enter Variant" name = "Variant">
-          </div>
-        </div>
-  <div class="container">
+ <!-- <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card">
-          <div class="card-body">
-            <div id="stars_rating">
-              <p class="heading">Rating</p>
+          <div class="card-body"> -->
+            <div id="stars_rating"> 
+              <h5 class="mb-4">Rating</h5>
               <div class="stars">
                 <div class="star">★</div>
                 <div class="star">★</div>
@@ -47,21 +131,24 @@
                 <div class="star">★</div>
                 <div class="star">★</div>
               </div>
-            </div>
           </div>
+         <!--  </div>
         </div>
       </div>
     </div>
-  </div>
-  <br><br>
+  </div> --> 
+  
   <div class="form-group">
-  <textarea textarea="" class="form-control" placeholder="Write your review" id="comment" name="review" cols="145" rows="5" maxlength="65525"></textarea>
+  <textarea textarea="" class="form-control"  placeholder="Write your review" id="comment" name="review" cols="60" rows="4" maxlength="65525"></textarea>
   </div>
   <input type="hidden" id="rate" name="rating" value="0">
   <input type="hidden" id="1" name="add_car_review" value="car_review">
   <input type="hidden" id="1" name="cid" value={{cid}}>
-    <button type="submit" class="btn btn-secondary">Submit</button>
+  <div class = "col-md-4 offset-md-4"><br>
+    <button type="submit" class="btn btn-dark w-100 py-3">Submit</button>
+    </div>
   </form>
+  </div></div>
 {% endif %}
 
   <script>
@@ -98,4 +185,15 @@ $('.star').on('click', function (e) {
 
 
   </script>
+
+<style>
+
+  label{
+    font-size: 16px;
+    color: #000;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  </style> 
   {% endblock %}

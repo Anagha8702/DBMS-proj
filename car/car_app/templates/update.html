@@ -1,28 +1,91 @@
 {% extends 'authenticate/base.html' %}
 {% block content %}
-
-	<form method ="POST">
-		{% csrf_token %}
-
-    {% if error %}
-		<div class="alert alert-danger alart-dismissable" role ="alert">
-                <button class="close" data-dismiss="alert">
-                    <small><sup>x</sup></small>
-                  </button>
-               		{{errormsg}}
+{% load static %}
+<div class="container-fluid position-relative p-0">
+  <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+    <a href="{% url 'home' %}" class="navbar-brand p-0">
+        <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Carz</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+            <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+          
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Statistics</a>
+                <div class="dropdown-menu m-0">
+                    <a href="{% url 'home' %}" class="dropdown-item">Power BI</a>
+                    <a href="{% url 'home' %}" class="dropdown-item">Personalize Power BI</a>
+                    <a href="{% url 'home' %}" class="dropdown-item">Custom</a>
                 </div>
-      {% endif%}
-      <h3 class ="text-center">Enter Car ID</h3>
-      <div class = "col-md-6 offset-md-3"> 
-	  <div class="form-group">
-	    <input type="text" class="form-control" placeholder="Enter Car ID" name = "car_id">
-	  </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Update</a>
+                <div class="dropdown-menu m-0">
+                    <a href="{% url 'add_car' %}" class="dropdown-item">Add Car</a>
+                    <a href="{% url 'update' %}" class="dropdown-item">Update Car</a>
+                    <a href="{% url 'customer_view' %}" class="dropdown-item">Customer Review</a>
+                </div>
+            </div>
+            <a href="{% url 'edit_profile' %}" class="nav-item nav-link">Profile</a>
+  <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+        </div>
+      
+    </div>
+</nav>
+	
+	<div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+		<div class="row py-5">
+			<div class="col-12 pt-lg-5 mt-lg-5 text-center">
+        <form method ="POST">
+          {% csrf_token %}
+          {% if error %}
+          <div class="alert alert-danger alart-dismissable" role ="alert">
+                      <button class="close" data-dismiss="alert">
+                          <small><sup>x</sup></small>
+                        </button>
+                         {{errormsg}}
+                      </div>
+            {% endif%}
+				<h1 class="display-4 text-white animated zoomIn">Enter Car ID</h1>
+        <div class = "col-md-4 offset-md-4"> 
+			<input type="text" class="form-control bg-light border-0"  style="height: 55px;" placeholder="Enter Car ID" name = "car_id">
+      
       <input type="hidden" id="1" name="form1" value="form1">
-      <button type="submit" class="btn btn-secondary">Search</button>
-      </form>
+      <br>
+      <button type="submit" class="btn btn-outline-light w-100 py-3">Search</button>
       </div>
+    </form>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+  {% if messages %}
+  <div class ="container">
+      {% for message in messages %}
+        <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+            <button class="btn-close" data-dismiss="alert">
+                <small><sup>x</sup></small>
+              </button>
+            {{ message }}
+          </div>
+        {% endfor%}
+      {% endif %}
+{% if error %}
+<div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+            <button class="btn-close" data-dismiss="alert">
+                <small><sup>x</sup></small>
+              </button>
+               {{errormsg}}
+            </div>
+  {% endif%}
       <!--FORM FOR UPDATION-->
       {% if show %}
+      <div style="justify-content: center; display: flex;">
+        <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
       <form method="POST">
         {% csrf_token %}
           <div class ="sec">
@@ -31,47 +94,47 @@
           <div class="row">
             <div class="col">
               <label for="col1-row1">Model</label>
-              <input type="text" name="Model" class='form-control' value={{Model}}>
+              <input type="text" name="Model" class='form-control bg-light border-0'  style="height: 55px;" value={{Model}}>
             </div>
             <div class="col">
               <label for="col2-row1">Variant</label>
-              <input type="text" name="variant" class='form-control' value={{variant}}>
+              <input type="text" name="variant" class='form-control bg-light border-0'  style="height: 55px;" value={{variant}}>
             </div>
             <div class="col">
               <label for="col3-row1">Mileage</label>
-              <input type="text" name="Mileage" class='form-control' value={{Mileage}}>
+              <input type="text" name="Mileage" class='form-control bg-light border-0'  style="height: 55px;" value={{Mileage}}>
             </div>
             <div class="col">
               <label for="col4-row1">Make</label>
-              <input type="text" name="Make" class='form-control' value={{Make}}>
+              <input type="text" name="Make" class='form-control bg-light border-0'  style="height: 55px;" value={{Make}}>
             </div>
           </div>
           <div class="row">
               <div class="col">
                   <label for="col1-row2">kerb weight</label>
-                  <input type="number" name="kerb_weight" class='form-control' value={{kerb_weight}}>
+                  <input type="number" name="kerb_weight" class='form-control bg-light border-0'  style="height: 55px;" value={{kerb_weight}}>
                 </div>
                 <div class="col">
                   <label for="col2-row2">Type</label>
-                  <input type="text" name="Type" class='form-control' value={{Type}}>
+                  <input type="text" name="Type" class='form-control bg-light border-0'  style="height: 55px;" value={{Type}}>
                 </div>
                 <div class="col">
                   <label for="col3-row2">No of Doors</label>
-                  <input type="number" name="no_of_doors" class='form-control' value={{no_of_doors}}>
+                  <input type="number" name="no_of_doors" class='form-control bg-light border-0'  style="height: 55px;" value={{no_of_doors}}>
                 </div>
                 <div class="col">
                   <label for="col4-row2">Boot Space</label>
-                  <input type="number" name="Boot_Space" class='form-control' value={{boot_space}}>
+                  <input type="number" name="Boot_Space" class='form-control bg-light border-0'  style="height: 55px;" value={{boot_space}}>
                 </div>
           </div>
           <div class="row">
               <div class="col">
                   <label for="col1-row3">Body Type</label>
-                  <input type="text" name="Body_Type" value={{body_type}} class='form-control'>
+                  <input type="text" name="Body_Type" value={{body_type}} class='form-control bg-light border-0'  style="height: 55px;">
                 </div>
                 <div class="col">
                   <label for="col2-row3">Ground Clearance</label>
-                  <input type="number" name="Ground_Clearance" value={{ground_clearance}} class='form-control'>
+                  <input type="number" name="Ground_Clearance" value={{ground_clearance}} class='form-control bg-light border-0'  style="height: 55px;">
                 </div>
           </div>
           </div>
@@ -82,40 +145,53 @@
               <div class="row">
                 <div class="col">
                   <label for="col1-row1">cc</label>
-                  <input type="number" name="cc" class='form-control' value={{cc}}>
+                  <input type="number" name="cc" class='form-control bg-light border-0'  style="height: 55px;" value={{cc}}>
                 </div>
                 <div class="col">
                   <label for="col2-row1">Fuel System Type</label>
-                  <input type="text" name="fuel_system_type" class='form-control' value={{fuel_system_type}}>
+                  <input type="text" name="fuel_system_type" class='form-control bg-light border-0'  style="height: 55px;" value={{fuel_system_type}}>
                 </div>
                 <div class="col">
                   <label for="col3-row1">Capacity</label>
-                  <input type="number" name="capacity" class='form-control' value={{fcapacity}}>
+                  <input type="number" name="capacity" class='form-control bg-light border-0'  style="height: 55px;" value={{fcapacity}}>
                 </div>
                 <div class="col">
                   <label for="col4-row1">Fuel Type</label>
-                  <input type="text" name="fuel_type" class='form-control' value={{fuel_type}}>
+                  <input type="text" name="fuel_type" class='form-control bg-light border-0'  style="height: 55px;" value={{fuel_type}}>
                 </div>
               </div>
               <div class="row">
                   <div class="col">
                       <label for="col1-row2">No of Cylinders</label>
-                      <input type="number" name="no_of_cylinders" class='form-control' value={{no_of_cylinders}}>
+                      <input type="number" name="no_of_cylinders" class='form-control bg-light border-0'  style="height: 55px;" value={{no_of_cylinders}}>
                     </div>
                     <div class="col">
                       <label for="col2-row2">Valves per Cylinder</label>
-                      <input type="number" name="valves_per_cylinder" class='form-control' value={{valves_per_cylinder}}>
+                      <input type="number" name="valves_per_cylinder" class='form-control bg-light border-0'  style="height: 55px;" value={{valves_per_cylinder}}>
                     </div>
                     <div class="col">
                       <label for="col3-row2">Configuration</label>
-                      <input type="text" name="config" class='form-control' value={{config}}>
+                      <input type="text" name="config" class='form-control bg-light border-0'  style="height: 55px;" value={{config}}>
                     </div> 
               </div>
               </div>  
               <input type="hidden" id="1" name="form1" value="form2">
               <input type="hidden" id="1" name="cid" value={{cid}}>
-              <button type="submit" value="Add Car" class="btn btn-secondary">Update Car</button>
+              <br>
+              <div class = "col-md-4 offset-md-4"> 
+              <button type="submit" value="Add Car" class="btn btn-dark w-100 py-3">Update Car</button>
+              </div>
         </form>
+      </div></div>
         {% endif %}
-        
+<style>
+
+label {
+  font-size: 16px;
+  color: #000;
+  display: block;
+  margin-bottom: 10px;
+}
+
+</style>    
 {% endblock %}

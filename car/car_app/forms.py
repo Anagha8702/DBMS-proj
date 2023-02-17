@@ -53,7 +53,7 @@ class CustomerForm(forms.Form):
     ("F", "F"),
     ("M", "M"),
 )
-	name = forms.CharField(label='Your Name', max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Name'}),)
-	lisence = forms.IntegerField(label=' License Number', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'License No'}),)
-	age = forms.IntegerField(label='Age', widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Age'}),)
-	gender = forms.ChoiceField(label='Gender',choices = CHOICES, widget=forms.Select(choices = CHOICES,attrs={'class':'form-control'}),)
+	name = forms.CharField(label='Your Name', max_length=100, widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'Name'}),)
+	lisence = forms.IntegerField(label=' License Number', widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'License No'}),)
+	age = forms.IntegerField(label='Age', widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'Age'}),)
+	gender = forms.ChoiceField(label='Gender',choices = CHOICES, widget=forms.Select(choices = CHOICES,attrs={'class':'form-select bg-light border-0','style':"height: 55px;"}),)

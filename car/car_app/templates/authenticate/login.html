@@ -11,8 +11,8 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<div class="navbar-nav ms-auto py-0">
-				<a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
-				<a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+				<a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+				<a href="{% url 'login' %}" class="nav-item nav-link active">Login</a>
 				<a href="{% url 'register' %}" class="nav-item nav-link">Register</a>
 			   
 			</div>
@@ -31,6 +31,31 @@
 		</div>
 	</div>
 	</div>
+	{% if messages %}
+	<br>
+	<div class ="container">
+		{% for message in messages %}
+		  <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+			  <button class="btn-close" data-dismiss="alert">
+				  <small><sup>x</sup></small>
+				</button>
+			  {{ message }}
+			</div>
+		  {% endfor%}
+		{% endif %}
+	{% if form.errors %}
+	<div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+	  <button class="btn-close" data-dismiss="alert">
+		  <small><sup>x</sup></small>
+		</button>
+	 {% for field in form %}
+		 {% if field.errors %}
+			 {{ field.errors }}
+		 {% endif%}
+		 {% endfor %}
+	</div>
+{% endif %}
+
 <h2 class ="text-center"> Login</h2> <br>
 
 <div class = "col-md-4 offset-md-4">

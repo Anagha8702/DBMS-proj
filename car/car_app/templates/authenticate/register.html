@@ -3,26 +3,42 @@
 {% block content %}
 
 <h2 class ="text-center"> Register </h2>
+{% if messages %}
+<div class ="container">
+	{% for message in messages %}
+	  <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+		  <button class="btn-close" data-dismiss="alert">
+			  <small><sup>x</sup></small>
+			</button>
+		  {{ message }}
+		</div>
+	  {% endfor%}
+	{% endif %}
+{% if form.errors %}
+
+		      <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+                <button class="btn-close" data-dismiss="alert">
+                    <small><sup>x</sup></small>
+                  </button>
+               
+
+               {% for field in form %}
+               	{% if field.errors %}
+               		{{ field.errors }}
+               	{% endif%}
+               	{% endfor %}
+
+
+              </div>
+
+  {% endif %}
 
 <div class = "col-md-6 offset-md-3"> 
 
 <form method="POST" action="{% url 'register' %}">
 		{% csrf_token %}
 
-		{% if form.errors %}
-		<div class="alert alert-danger alart-dismissable" role ="alert">
-                <button class="close" data-dismiss="alert">
-                    <small><sup>x</sup></small>
-                  </button>
-               {% for field in form%}
-               	{% if field.errors%}
-               		{{field.errors}}
-               	{% endif%}
-               	{% endfor %}
-
-
-              </div>
-		{% endif %}
+	
 		{{ form.as_p }}
 		Salary: <input type="number" name="salary"/><br/>
 		Address: <input type="text" name="addr"/>

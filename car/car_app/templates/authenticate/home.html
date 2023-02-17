@@ -41,7 +41,7 @@
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="{% static 'img/carousel-1.jpg'%}" alt="Image">
+                    <img class="w-100" src="{% static 'img/carousel-2.jpg'%}" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Business Intelligence for informed decisions</h5>
@@ -137,6 +137,39 @@
     </div>
     <!-- Navbar & Carousel End -->
 {% endif %}
+{% if messages %}
+<br>
+<div class ="container">
+    {% for message in messages %}
+      <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+          <button class="btn-close" data-dismiss="alert">
+              <small><sup>x</sup></small>
+            </button>
+          {{ message }}
+        </div>
+      {% endfor%}
+    {% endif %}
+{% if form.errors %}
+<br>
+		      <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+                <button class="btn-close" data-dismiss="alert">
+                    <small><sup>x</sup></small>
+                  </button>
+               {% for field in form %}
+               	{% if field.errors %}
+               		{{ field.errors }}
+               	{% endif%}
+               	{% endfor %}
+              </div>
+  {% endif %}
+{% if error %}
+		<div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+                <button class="btn-close" data-dismiss="alert">
+                    <small><sup>x</sup></small>
+                  </button>
+               		{{errormsg}}
+                </div>
+      {% endif%}
 
  <!-- Testimonial Start -->
  <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">

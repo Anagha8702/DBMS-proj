@@ -111,8 +111,15 @@
               <button type="submit" id="submit-btn" class="btn btn-dark w-100 py-2">Generate graph</button> </div>
             </div>
             </form>
+         
           </div>
           </div>
+          {% if show %}
+          <br>
+          <div class = "col-md-8 offset-md-2">
+          <centre><canvas id="G5"></canvas></centre>
+          </div>
+          {% endif %}
     <script>
 //Plugin to provide background color to graphs
 const plugin = {
@@ -126,27 +133,47 @@ const plugin = {
     ctx.restore();
   }
 };
-let Labels = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var y1 = JSON.parse("{{ y1 }}");
+var y3 = JSON.parse("{{ y3 }}");
+var y4 = JSON.parse("{{ y4 }}");
+var linem = JSON.parse("{{ linem }}");
+var linef = JSON.parse("{{ linef }}");
+console.log(y1);
+var x = "{{x1}}"
+const parser = new DOMParser();
+
+decodedList1 = parser.parseFromString(`<!doctype html><body>${x}`, 'text/html').body.textContent;
+const x1 = JSON.parse(decodedList1);
+console.log(x1)
+var x2 = x1
+
+y = "{{x3}}".replace(/&#x27;/g, '"');
+const x3 = JSON.parse(y);
+console.log(x3)
+var z = "{{x4}}".replace(/&#x27;/g, '"');
+const x4 = JSON.parse(z);
+console.log(x4)
+console.log(linef);
+console.log(linem);
+
+var Y = JSON.parse("{{ y }}");
+Y1 = "{{x}}".replace(/&#x27;/g, '"');
+const X = JSON.parse(Y1);
+console.log(X)
+
+
 let DATA = [1,2,3,4,5,6,7,8,9,10,11,12];
 let DATA1 = [];
 f=  {
     label: "Female",
-          data: [1,2,3,4,5,6,7,8,9,10,11,12],
+          data: [1,2,3],
           backgroundColor: [
           'rgba(255, 99, 132, 1)',
               'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 0.5)',
-              'rgba(75, 192, 192, 0.5)',
-              'rgba(153, 102, 255, 0.5)',
-              'rgba(255, 159, 64, 0.5)'
           ],
           borderColor: [
           'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
+              'rgba(54, 162, 235, 1)', 
           ],
           hoverOffset: 5,
           borderWidth: 1,
@@ -154,22 +181,15 @@ f=  {
   };
   m=  {
     label: "Male",
-          data: [4,9,8,5,9,6,7,8,9,10,11,12],
+          data: linem,
           backgroundColor: [
           'rgba(255, 99, 132, 1)',
               'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 0.5)',
-              'rgba(75, 192, 192, 0.5)',
-              'rgba(153, 102, 255, 0.5)',
-              'rgba(255, 159, 64, 0.5)'
+              
           ],
           borderColor: [
           'rgba(255, 99, 132, 1)',
               'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
           ],
           hoverOffset: 5,
           borderWidth: 1,
@@ -181,15 +201,15 @@ const ctx = document.getElementById('G1').getContext('2d');
 const myChart2 = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: Labels,
-        datasets:[{ data: DATA }],
+        labels: x1,
+        datasets:DATA1,
     },
     plugins: [plugin],
     options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Weavers'
+                text: 'Gender vs Car Body Type'
             },
 
         },
@@ -206,9 +226,9 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
       var config2 ={
           type: "bar",
           data: {
-              labels : ['a','b','c','d','e'],
-              datasets: [{ data: [4,2,4,6,1],
-                label: "Brands",
+              labels : x1,
+              datasets: [{ data: y1,
+                label: "Age",
               backgroundColor: [
               'rgba(255, 99, 132, 1)',
               'rgba(54, 162, 235, 1)',
@@ -225,7 +245,7 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
               plugins: {
                   title: {
                       display: true,
-                      text: "Brand vs Sales"
+                      text: "Car Body Type vs Customer Age"
                   },
       
               },
@@ -238,8 +258,8 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
       var config4 ={
           type: "pie",
           data: {
-              labels : ['a','b','c','d','e'],
-              datasets: [{ data: [4,2,4,6,1],
+              labels : x3,
+              datasets: [{ data: y3,
                 label: "Brands",
               backgroundColor: [
               'rgba(255, 99, 132, 1)',
@@ -256,7 +276,7 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
               plugins: {
                   title: {
                       display: true,
-                      text: "Brand vs Sales"
+                      text: "Fuel Type vs Mileage"
                   },
       
               },
@@ -269,8 +289,8 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
       var config3 ={
           type: "doughnut",
           data: {
-              labels : ['a','b','c','d','e'],
-              datasets: [{ data: [4,2,4,6,1],
+              labels : x4,
+              datasets: [{ data: y4,
                 label: "Brands",
               backgroundColor: [
               'rgba(255, 99, 132, 1)',
@@ -288,7 +308,7 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
               plugins: {
                   title: {
                       display: true,
-                      text: "Brand vs Sales"
+                      text: "Fuel System Typwe"
                   },
       
               },
@@ -296,6 +316,39 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
           }
         };
         var G3=new Chart(canvaselement3,config3);
+
+        let canvaselement5=document.getElementById("G5").getContext('2d');
+      
+      var config5 ={
+          type: "bar",
+          data: {
+              labels : X,
+              datasets: [{ data: Y,
+                label: "",
+              backgroundColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+
+                  ],
+          }]
+          },
+          plugins: [plugin],
+          options: {
+              plugins: {
+                  title: {
+                      display: true,
+                      text: ""
+                  },
+      
+              },
+             
+          }
+        };
+        var G5=new Chart(canvaselement5,config5);
 
         //getting dropdown value
 document.getElementById("submit-btn").addEventListener("click", function() {

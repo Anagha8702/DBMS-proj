@@ -9,6 +9,7 @@ from .forms import CustomerForm
 import firebase_admin
 from firebase_admin import credentials,db,firestore
 import sqlite3
+import json
 
 # Create your views here.
 def login_user (request):
@@ -321,7 +322,7 @@ def custom(request):
 
         messages.success(request,("Query"))
         # temp = results[0]
-        return render(request,'custom.html',{'x':x,'y':y,'x1':x1,'y1':y1,'x2':x2,'linem':lineM, 'linef': lineF,'x3':x3,'y3':y3,'x4':x4,'y4':y4 })
+        return render(request,'custom.html',{'x':x,'y':y,'x1':json.dumps(x1),'y1':y1,'x2':x2,'linem':lineM, 'linef': lineF,'x3':x3,'y3':y3,'x4':x4,'y4':y4, 'show':1})
         # return render(request,'custom.html')
     else:
         print("HI")
@@ -403,5 +404,5 @@ def custom(request):
             x4.append(i[0])
             y4.append(i[1])
         print(x4,y4)
-        return render(request,'custom.html',{'x1':x1,'y1':y1,'x2':x2,'linem':lineM, 'linef': lineF,'x3':x3,'y3':y3,'x4':x4,'y4':y4 })
+        return render(request,'custom.html',{'x1':json.dumps(x1),'y1':y1,'x2':x2,'linem':lineM, 'linef': lineF,'x3':x3,'y3':y3,'x4':x4,'y4':y4, 'x':[],'y':[],'show':0 })
         # return render(request,'custom.html')

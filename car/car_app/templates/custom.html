@@ -84,27 +84,31 @@
           </div><br>
           <div class = "col-md-4 offset-md-4">
             <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s"> 
-            <form method ="POST">
+            <form method ="POST" action="{% url 'custom' %}">
               {% csrf_token %}
               <div class="row g-3">
               <div class="col-xl-12">
-                <select class="form-select bg-light border-0" style="height: 30px;">
+                <select id="dropdown1" name="dropdown1" class="form-select bg-light border-0" style="height: 30px;">
 									<option selected>Select x-axis</option>
-									<option value="1">Service 1</option>
-									<option value="2">Service 2</option>
-									<option value="3">Service 3</option>
+                  <option value="Make">Make</option>
+                  <option value="Model">Model</option>
+                  <option value="Varient">Varient</option>
 								</select>
               </div>
               <div class="col-12">
-                <select class="form-select bg-light border-0" style="height: 30px;">
+                <select id="dropdown2" name="dropdown2" class="form-select bg-light border-0" style="height: 30px;">
 									<option selected>Select y-axis</option>
-									<option value="1">Service 1</option>
-									<option value="2">Service 2</option>
-									<option value="3">Service 3</option>
+                  <option value="cc">CC</option>
+                  <option value="capacity">Capacity</option>
+                  <option value="boot_space">Boot Space</option>
+                  <option value="no_of_doors">Number Of Doors</option>
+                  <option value="ground_clearance">Ground Clearance</option>
+                  <option value="no_of_cylinders">No Of Cylinders</option>
+                  <option value="valves_per_cylinder">Valve Per Cylinder</option>
 								</select>
               </div>
               <div class="col-12">
-              <button type="submit" class="btn btn-dark w-100 py-2">Generate graph</button> </div>
+              <button type="submit" id="submit-btn" class="btn btn-dark w-100 py-2">Generate graph</button> </div>
             </div>
             </form>
           </div>
@@ -292,5 +296,35 @@ let canvaselement2=document.getElementById("G2").getContext('2d');
           }
         };
         var G3=new Chart(canvaselement3,config3);
+
+        //getting dropdown value
+document.getElementById("submit-btn").addEventListener("click", function() {
+  // Create a new XMLHttpRequest object
+  var xhr = new XMLHttpRequest();
+
+  // Define what happens when the response is received
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        console.log(xhr.responseText);
+      } else {
+        console.error(xhr.statusText);
+      }
+    }
+  };
+
+  // Open the request
+  xhr.open("POST", "{% url 'custom' %}", true);
+
+  // Set the Content-Type header
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+  // Get the values of the selected options
+  var dropdown1Value = document.getElementById("dropdown1").value;
+  var dropdown2Value = document.getElementById("dropdown2").value;
+
+  // Send the request with the selected options
+  xhr.send(JSON.stringify({dropdown1: dropdown1Value, dropdown2: dropdown2Value}));
+});
     </script>
 {% endblock %}

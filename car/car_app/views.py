@@ -8,6 +8,7 @@ from .models import Admin, Car, Body, Cylinder, Engine, Customer, Bought_by
 from .forms import CustomerForm
 import firebase_admin
 from firebase_admin import credentials,db,firestore
+import sqlite3
 
 # Create your views here.
 def login_user (request):
@@ -270,3 +271,134 @@ def home(request):
         return render(request, 'authenticate/home.html',context)
     else:
         return render(request, 'authenticate/home.html')
+
+
+def custom(request):
+    if(request.method == 'POST'):
+        xAxis = request.POST.get('dropdown1')
+        yAxis= request.POST.get('dropdown2')
+        print(xAxis,yAxis)
+        
+        print("hi")
+        xQuery = ""
+        xGroup = ""
+        if xAxis == 'Make':
+            xQuery = "SELECT c.Make"
+            xGroup = "GROUP BY c.Make;"
+        elif xAxis == 'Model':
+            xQuery = "SELECT c.Model"
+            xGroup = "GROUP BY c.Model;"
+        elif xAxis == 'Varient':
+            xQuery = "SELECT c.variant"
+            xGroup = "GROUP BY c.variant;"
+        
+        joinQuery = ""
+        if yAxis == "cc" or yAxis == "capacity":
+            joinQuery = "INNER JOIN car_app_engine as e "+"ON c.Engine_ID_id = e.Engine_ID"
+        elif yAxis == 'no_of_doors' or yAxis == 'boot_space' or yAxis == 'ground_clearance':
+            joinQuery = "INNER JOIN car_app_body as b ON c.Body_ID_id = b.Body_ID"
+        elif yAxis == 'no_of_cylinders' or yAxis == 'valves_per_cylinder':
+            joinQuery = "INNER JOIN car_app_engine AS e INNER JOIN car_app_cylinder as cy ON c.Engine_ID_id = e.Engine_ID and cy.id = e.id_id"
+            
+        yValue = "AVG("+yAxis+") \n"
+        mainQuery = xQuery+","+yValue+"FROM car_app_car AS c\n"+joinQuery+"\n"+xGroup
+        print(mainQuery)
+        conn = sqlite3.connect('db.sqlite3')
+        cursor = conn.cursor()
+        print(mainQuery)
+        cursor.execute(mainQuery)
+        results = cursor.fetchall()
+        conn.close()
+        x = []
+        y = []
+        
+        for i in results:
+            x.append(i[0])
+            y.append(i[1])
+        print(x,y)
+
+
+        messages.success(request,("Query"))
+        # temp = results[0]
+        return render(request,'custom.html')
+    else:
+        print("HI")
+        # age of customer vs car body type
+        q4="SELECT b.body_type,AVG(cu.age)\nFROM car_app_car AS c\nINNER JOIN car_app_body AS b\nINNER JOIN car_app_bought_by AS bb\nINNER JOIN car_app_customer AS cu \nON c.Body_ID_id = b.Body_ID and bb.Customer_ID_id = cu.Customer_ID and bb.Car_ID_id = c.Car_ID\nGROUP BY b.body_type;"
+        print(q4)
+        conn = sqlite3.connect('db.sqlite3')
+        cursor = conn.cursor()
+        cursor.execute(q4)
+        results1 = cursor.fetchall()
+        conn.close()
+        x1=[]
+        y1=[]
+        for i in results1:
+            x1.append(i[0])
+            y1.append(i[1])
+            
+        
+        #gender vs car body type
+        q5="select b.body_type,cu.gender,count(cu.gender) FROM car_app_car as c INNER JOIN car_app_body as b INNER JOIN car_app_bought_by as bb INNER JOIN car_app_customer as cu ON c.Body_ID_id = b.Body_ID and bb.Customer_ID_id = cu.Customer_ID and bb.Car_ID_id = c.Car_ID group by b.body_type,cu.gender;"
+        conn = sqlite3.connect('db.sqlite3')
+        cursor = conn.cursor()
+        cursor.execute(q5)
+        results2 = cursor.fetchall()
+        conn.close()
+        dict={}
+        bodyTypeSet = set()
+        x2 = []
+        lineM = []
+        lineF = []
+        for i in results2:
+            dict.update({i[0]:{}})
+            bodyTypeSet.add(i[0])
+        for i in results2:
+            dict[i[0]].update({i[1]:i[2]})
+        for i in results2:
+            dict[i[0]].update({i[1]:i[2]})
+    
+        for i in bodyTypeSet:
+            x2.append(i)
+            if 'M' in dict[i].keys():
+                lineM.append(dict[i]['M'])
+            else:
+                lineM.append(0) 			
+            if 'F' in dict[i].keys():
+                lineF.append(dict[i]['F'])
+            else:
+                lineF.append(0)
+        print(results2,x2,lineM,lineF)
+
+
+
+		# fuel type vs mileage	
+        q7="select e.fuel_type,avg(c.Mileage) FROM car_app_car as c INNER JOIN car_app_engine as e ON c.Engine_ID_id = e.Engine_ID group by e.fuel_type;"
+        conn = sqlite3.connect('db.sqlite3')
+        cursor = conn.cursor()
+        cursor.execute(q7)
+        results3 = cursor.fetchall()
+        conn.close()
+        x3 = []
+        y3 = []
+        for i in results3:
+            x3.append(i[0])
+            y3.append(i[1])
+        print(x3,y3)
+
+
+		#feul system type vs capacity
+        q9="select e.fuel_system_type,avg(e.capacity) FROM car_app_engine as e group by e.fuel_system_type;"
+				
+        conn = sqlite3.connect('db.sqlite3')
+        cursor = conn.cursor()
+        cursor.execute(q9)
+        results4 = cursor.fetchall()
+        conn.close()
+        x4 = []
+        y4 = []
+        for i in results4:
+            x4.append(i[0])
+            y4.append(i[1])
+        print(x4,y4)
+        return render(request,'custom.html')

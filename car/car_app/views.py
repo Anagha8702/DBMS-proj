@@ -30,9 +30,11 @@ def logout_user(request):
 	messages.success(request,('Youre now logged out'))
 	return redirect('home')
 
-def report_powerbi(request):
-	
-	return redirect('powerbi')
+def powerbi(request):
+	return render(request, 'powerbi.html')
+
+def custom(request):
+	return render(request, 'custom.html')
 
 def register_user(request):
 	if request.method =='POST':

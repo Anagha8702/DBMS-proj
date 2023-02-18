@@ -1,0 +1,296 @@
+{% extends 'authenticate/base.html' %}
+{% block content %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div class="container-fluid position-relative p-0">
+  <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+    <a href="{% url 'home' %}" class="navbar-brand p-0">
+        <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>Carz</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+            <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+          
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Statistics</a>
+                <div class="dropdown-menu m-0">
+                    <a href="{% url 'home' %}" class="dropdown-item">Power BI</a>
+                    <a href="{% url 'home' %}" class="dropdown-item">Personalize Power BI</a>
+                    <a href="{% url 'home' %}" class="dropdown-item">Custom</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Update</a>
+                <div class="dropdown-menu m-0">
+                    <a href="{% url 'add_car' %}" class="dropdown-item">Add Car</a>
+                    <a href="{% url 'update' %}" class="dropdown-item">Update Car</a>
+                    <a href="{% url 'customer_view' %}" class="dropdown-item">Customer Review</a>
+                </div>
+            </div>
+            <a href="{% url 'edit_profile' %}" class="nav-item nav-link">Profile</a>
+  <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+        </div>
+      
+    </div>
+</nav>
+</div>
+<div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+  <div class="row py-5">
+    <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+      <h1 class="display-4 text-white animated zoomIn">Custom</h1>
+      <a href="" class="h5 text-white">Home</a>
+      <i class="far fa-circle text-white px-2"></i>
+      <a href="" class="h5 text-white">Custom</a>
+    </div>
+  </div>
+</div>
+</div>
+{% if messages %}
+<div class ="container">
+    {% for message in messages %}
+      <div class="alert alert-danger alart-dismissable" role ="alert" style=" margin-right: 50px;  margin-left: 50px;">
+          <button class="btn-close" data-dismiss="alert">
+              <small><sup>x</sup></small>
+            </button>
+          {{ message }}
+        </div>
+      {% endfor%}
+    {% endif %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+      <centre><canvas id="G1"></canvas></centre>
+      </div>
+      <br>
+      <div class="col-sm-6">
+        <centre><canvas id="G2"></canvas></centre>
+        </div>
+      </div>
+    <br>
+        <div class="row">
+          <div class="col-sm-6">
+        <div class="col-sm-10 flex-column" style="justify-content: center;">
+          <centre><canvas id="G3" width="20" height="20"></canvas></centre>
+          </div></div>
+          <br>
+          <div class="col-sm-6">
+          <div class="col-sm-10 flex-column text" style="justify-content: center;">
+            <centre><canvas id="G4" width="20" height="20"></canvas></centre>
+            </div> 
+          </div>  </div>
+          </div><br>
+          <div class = "col-md-4 offset-md-4">
+            <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s"> 
+            <form method ="POST">
+              {% csrf_token %}
+              <div class="row g-3">
+              <div class="col-xl-12">
+                <select class="form-select bg-light border-0" style="height: 30px;">
+									<option selected>Select x-axis</option>
+									<option value="1">Service 1</option>
+									<option value="2">Service 2</option>
+									<option value="3">Service 3</option>
+								</select>
+              </div>
+              <div class="col-12">
+                <select class="form-select bg-light border-0" style="height: 30px;">
+									<option selected>Select y-axis</option>
+									<option value="1">Service 1</option>
+									<option value="2">Service 2</option>
+									<option value="3">Service 3</option>
+								</select>
+              </div>
+              <div class="col-12">
+              <button type="submit" class="btn btn-dark w-100 py-2">Generate graph</button> </div>
+            </div>
+            </form>
+          </div>
+          </div>
+    <script>
+//Plugin to provide background color to graphs
+const plugin = {
+  id: 'custom_canvas_background_color',
+  beforeDraw: (chart) => {
+    const ctx = chart.canvas.getContext('2d');
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = '#ADD8E6';
+    ctx.fillRect(0, 0, chart.width, chart.height);
+    ctx.restore();
+  }
+};
+let Labels = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let DATA = [1,2,3,4,5,6,7,8,9,10,11,12];
+let DATA1 = [];
+f=  {
+    label: "Female",
+          data: [1,2,3,4,5,6,7,8,9,10,11,12],
+          backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)'
+          ],
+          borderColor: [
+          'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          hoverOffset: 5,
+          borderWidth: 1,
+          tension: 0.4,
+  };
+  m=  {
+    label: "Male",
+          data: [4,9,8,5,9,6,7,8,9,10,11,12],
+          backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(255, 159, 64, 0.5)'
+          ],
+          borderColor: [
+          'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          hoverOffset: 5,
+          borderWidth: 1,
+          tension: 0.4,
+  };
+  DATA1.push(f);
+  DATA1.push(m);
+const ctx = document.getElementById('G1').getContext('2d');
+const myChart2 = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: Labels,
+        datasets:[{ data: DATA }],
+    },
+    plugins: [plugin],
+    options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Weavers'
+            },
+
+        },
+        scales: {
+            y: {
+                beginAtZero: false
+            }
+        }
+    
+    }
+});
+let canvaselement2=document.getElementById("G2").getContext('2d');
+      
+      var config2 ={
+          type: "bar",
+          data: {
+              labels : ['a','b','c','d','e'],
+              datasets: [{ data: [4,2,4,6,1],
+                label: "Brands",
+              backgroundColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+
+                  ],
+          }]
+          },
+          plugins: [plugin],
+          options: {
+              plugins: {
+                  title: {
+                      display: true,
+                      text: "Brand vs Sales"
+                  },
+      
+              },
+             
+          }
+        };
+        var G2=new Chart(canvaselement2,config2);
+        let canvaselement4=document.getElementById("G4").getContext('2d');
+      
+      var config4 ={
+          type: "pie",
+          data: {
+              labels : ['a','b','c','d','e'],
+              datasets: [{ data: [4,2,4,6,1],
+                label: "Brands",
+              backgroundColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+                  ],
+          }]
+          },
+          plugins: [plugin],
+          options: {
+              plugins: {
+                  title: {
+                      display: true,
+                      text: "Brand vs Sales"
+                  },
+      
+              },
+             
+          }
+        };
+        var G4=new Chart(canvaselement4,config4);
+        let canvaselement3=document.getElementById("G3").getContext('2d');
+      
+      var config3 ={
+          type: "doughnut",
+          data: {
+              labels : ['a','b','c','d','e'],
+              datasets: [{ data: [4,2,4,6,1],
+                label: "Brands",
+              backgroundColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+
+                  ],
+          }]
+          },
+          plugins: [plugin],
+          options: {
+              plugins: {
+                  title: {
+                      display: true,
+                      text: "Brand vs Sales"
+                  },
+      
+              },
+             
+          }
+        };
+        var G3=new Chart(canvaselement3,config3);
+    </script>
+{% endblock %}

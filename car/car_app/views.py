@@ -274,6 +274,7 @@ def home(request):
 
 
 def custom(request):
+    global x1,x2,x3,x4,y1,y3,lineM,lineF,y4
     if(request.method == 'POST'):
         xAxis = request.POST.get('dropdown1')
         yAxis= request.POST.get('dropdown2')
@@ -320,7 +321,8 @@ def custom(request):
 
         messages.success(request,("Query"))
         # temp = results[0]
-        return render(request,'custom.html')
+        return render(request,'custom.html',{'x':x,'y':y,'x1':x1,'y1':y1,'x2':x2,'linem':lineM, 'linef': lineF,'x3':x3,'y3':y3,'x4':x4,'y4':y4 })
+        # return render(request,'custom.html')
     else:
         print("HI")
         # age of customer vs car body type
@@ -401,4 +403,5 @@ def custom(request):
             x4.append(i[0])
             y4.append(i[1])
         print(x4,y4)
-        return render(request,'custom.html')
+        return render(request,'custom.html',{'x1':x1,'y1':y1,'x2':x2,'linem':lineM, 'linef': lineF,'x3':x3,'y3':y3,'x4':x4,'y4':y4 })
+        # return render(request,'custom.html')

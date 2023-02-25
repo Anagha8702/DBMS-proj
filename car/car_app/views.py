@@ -7,9 +7,13 @@ from .forms import SignUpForm, EditProfileForm
 from .models import Admin, Car, Body, Cylinder, Engine, Customer, Bought_by
 from .forms import CustomerForm
 import firebase_admin
-from firebase_admin import credentials,db,firestore
+from firebase_admin import credentials,db
 import sqlite3
 import json
+import math
+import nltk
+#nltk.download('vader_lexicon')
+from nltk.sentiment import SentimentIntensityAnalyzer
 
 # Create your views here.
 def login_user (request):
@@ -146,12 +150,14 @@ def customer_view(request):
 				cred = credentials.Certificate("C:\\Users\\Anagha Anand\\Documents\\DBMS_PROJECT\\car\\car_app\\a.json")
 				firebase_admin.initialize_app(cred, {'databaseURL': 'https://cardata-413aa-default-rtdb.asia-southeast1.firebasedatabase.app'})
 				ref = db.reference("/Data")
-				ref.push({
+				ref1 = ref.child(str(car_obj.Car_ID))
+				ref1.push().set({
 				car_obj.Car_ID: review
 				})
 			except:
 				ref = db.reference("/Data")
-				ref.push({
+				ref1 = ref.child(str(car_obj.Car_ID))
+				ref1.push().set({
 				car_obj.Car_ID: review
 				})
 			#ref = db.reference()
@@ -266,12 +272,48 @@ def update(request):
 		return render(request, 'update.html',{'show':0})
 
 def home(request):
-    if request.user.is_authenticated:
-        admin_obj = Admin.objects.get(Admin_ID_id=request.user)
-        context = {'sal': admin_obj.salary, 'addr': admin_obj.address, 'phone': admin_obj.Phone_no}
-        return render(request, 'authenticate/home.html',context)
-    else:
-        return render(request, 'authenticate/home.html')
+	if request.user.is_authenticated:
+		if(request.method == 'POST'):
+			cid = request.POST.get('id')
+			print(cid)
+			try:
+				cred = credentials.Certificate("C:\\Users\\Anagha Anand\\Documents\\DBMS_PROJECT\\car\\car_app\\a.json")
+				firebase_admin.initialize_app(cred, {'databaseURL': 'https://cardata-413aa-default-rtdb.asia-southeast1.firebasedatabase.app'})
+				ref = db.reference("/Data")
+				car_reviews_ref = ref.child(str(cid))
+				x = car_reviews_ref.get()
+				review = []
+				for i in x.values():
+					review.append(i[str(cid)])
+				print(review)
+			except:
+				ref = db.reference("/Data")
+				car_reviews_ref = ref.child(str(cid))
+				x = car_reviews_ref.get()
+				review = []
+				for i in x.values():
+					review.append(i[str(cid)])
+				print(review)
+			sia = SentimentIntensityAnalyzer()
+			review_val = []
+			label = []
+			for review1 in review:
+				score = sia.polarity_scores(str(review1))
+				x1 = math.floor(score['compound']*100)
+				review_val.append(x1)
+				label.append('')
+
+			print(review_val)
+
+			admin_obj = Admin.objects.get(Admin_ID_id=request.user)
+			context = {'sal': admin_obj.salary, 'addr': admin_obj.address, 'phone': admin_obj.Phone_no,'review_val':review_val,'show':1,'cid':cid,'lab':json.dumps(label)}
+			return render(request, 'authenticate/home.html',context)
+		else:
+			admin_obj = Admin.objects.get(Admin_ID_id=request.user)
+			context = {'sal': admin_obj.salary, 'addr': admin_obj.address, 'phone': admin_obj.Phone_no}
+			return render(request, 'authenticate/home.html',context)
+	else:
+		return render(request, 'authenticate/home.html')
 
 
 def custom(request):
@@ -317,18 +359,16 @@ def custom(request):
         for i in results:
             x.append(i[0])
             y.append(i[1])
-        print(x,y)
+        #print(x,y)
 
-
-        messages.success(request,("Query"))
         # temp = results[0]
         return render(request,'custom.html',{'x':x,'y':y,'x1':json.dumps(x1),'y1':y1,'x2':x2,'linem':lineM, 'linef': lineF,'x3':x3,'y3':y3,'x4':x4,'y4':y4, 'show':1})
         # return render(request,'custom.html')
     else:
-        print("HI")
+        #print("HI")
         # age of customer vs car body type
         q4="SELECT b.body_type,AVG(cu.age)\nFROM car_app_car AS c\nINNER JOIN car_app_body AS b\nINNER JOIN car_app_bought_by AS bb\nINNER JOIN car_app_customer AS cu \nON c.Body_ID_id = b.Body_ID and bb.Customer_ID_id = cu.Customer_ID and bb.Car_ID_id = c.Car_ID\nGROUP BY b.body_type;"
-        print(q4)
+        #print(q4)
         conn = sqlite3.connect('db.sqlite3')
         cursor = conn.cursor()
         cursor.execute(q4)

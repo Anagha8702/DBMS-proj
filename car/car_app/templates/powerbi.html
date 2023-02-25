@@ -16,9 +16,9 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Statistics</a>
                 <div class="dropdown-menu m-0">
-                    <a href="{% url 'home' %}" class="dropdown-item">Power BI</a>
-                    <a href="{% url 'home' %}" class="dropdown-item">Personalize Power BI</a>
-                    <a href="{% url 'home' %}" class="dropdown-item">Custom</a>
+                    <a href="{% url 'powerbi' %}" class="dropdown-item">Power BI</a>
+                    <a href="https://app.powerbi.com/reportEmbed?reportId=f8b37c55-b526-4725-8705-3f4691599edc&autoAuth=true&ctid=26de3d8f-79f7-4642-8217-bbd1e0bb3d8a" target="_blank" class="dropdown-item">Personalize Power BI</a>
+                    <a href="{% url 'custom' %}" class="dropdown-item">Custom</a>
                 </div>
             </div>
             <div class="nav-item dropdown">
@@ -58,4 +58,5 @@
         </div>
       {% endfor%}
     {% endif %}
+    <iframe title="reportver1" width="1525" height="690" src="https://app.powerbi.com/view?r=eyJrIjoiZGFiNTRkMDctYjEwNy00YmQwLThmNWYtNjhiM2Y0N2I0ODBiIiwidCI6IjI2ZGUzZDhmLTc5ZjctNDY0Mi04MjE3LWJiZDFlMGJiM2Q4YSJ9" frameborder="0" allowFullScreen="true"></iframe>
 {% endblock %}

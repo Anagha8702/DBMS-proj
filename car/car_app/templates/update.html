@@ -51,8 +51,7 @@
             {% endif%}
 				<h1 class="display-4 text-white animated zoomIn">Enter Car ID</h1>
         <div class = "col-md-4 offset-md-4"> 
-			<input type="text" class="form-control bg-light border-0"  style="height: 55px;" placeholder="Enter Car ID" name = "car_id">
-      
+			<input type="number" min="60000" class="form-control bg-light border-0"  style="height: 55px;" placeholder="Enter Car ID" name = "car_id">
       <input type="hidden" id="1" name="form1" value="form1">
       <br>
       <button type="submit" class="btn btn-outline-light w-100 py-3">Search</button>
@@ -94,47 +93,47 @@
           <div class="row">
             <div class="col">
               <label for="col1-row1">Model</label>
-              <input type="text" name="Model" class='form-control bg-light border-0'  style="height: 55px;" value={{Model}}>
+              <input type="text" name="Model" class='form-control bg-light border-0'  style="height: 55px;" value={{Model}} required>
             </div>
             <div class="col">
               <label for="col2-row1">Variant</label>
-              <input type="text" name="variant" class='form-control bg-light border-0'  style="height: 55px;" value={{variant}}>
+              <input type="text" name="variant" class='form-control bg-light border-0'  style="height: 55px;" value={{variant}} required>
             </div>
             <div class="col">
               <label for="col3-row1">Mileage</label>
-              <input type="text" name="Mileage" class='form-control bg-light border-0'  style="height: 55px;" value={{Mileage}}>
+              <input type="text" name="Mileage" class='form-control bg-light border-0'  style="height: 55px;" value={{Mileage}} required>
             </div>
             <div class="col">
               <label for="col4-row1">Make</label>
-              <input type="text" name="Make" class='form-control bg-light border-0'  style="height: 55px;" value={{Make}}>
+              <input type="text" name="Make" class='form-control bg-light border-0'  style="height: 55px;" value={{Make}} required>
             </div>
           </div>
           <div class="row">
               <div class="col">
                   <label for="col1-row2">kerb weight</label>
-                  <input type="number" name="kerb_weight" class='form-control bg-light border-0'  style="height: 55px;" value={{kerb_weight}}>
+                  <input type="number" min="100" name="kerb_weight" class='form-control bg-light border-0'  style="height: 55px;" value={{kerb_weight}} required>
                 </div>
                 <div class="col">
                   <label for="col2-row2">Type</label>
-                  <input type="text" name="Type" class='form-control bg-light border-0'  style="height: 55px;" value={{Type}}>
+                  <input type="text" name="Type" class='form-control bg-light border-0'  style="height: 55px;" value={{Type}} required>
                 </div>
                 <div class="col">
                   <label for="col3-row2">No of Doors</label>
-                  <input type="number" name="no_of_doors" class='form-control bg-light border-0'  style="height: 55px;" value={{no_of_doors}}>
+                  <input type="number" min="2" name="no_of_doors" class='form-control bg-light border-0'  style="height: 55px;" value={{no_of_doors}} required>
                 </div>
                 <div class="col">
                   <label for="col4-row2">Boot Space</label>
-                  <input type="number" name="Boot_Space" class='form-control bg-light border-0'  style="height: 55px;" value={{boot_space}}>
+                  <input type="number" min="50" name="Boot_Space" class='form-control bg-light border-0'  style="height: 55px;" value={{boot_space}} required>
                 </div>
           </div>
           <div class="row">
               <div class="col">
                   <label for="col1-row3">Body Type</label>
-                  <input type="text" name="Body_Type" value={{body_type}} class='form-control bg-light border-0'  style="height: 55px;">
+                  <input type="text" name="Body_Type" value={{body_type}} class='form-control bg-light border-0'  style="height: 55px;" required>
                 </div>
                 <div class="col">
                   <label for="col2-row3">Ground Clearance</label>
-                  <input type="number" name="Ground_Clearance" value={{ground_clearance}} class='form-control bg-light border-0'  style="height: 55px;">
+                  <input type="number" min="50" name="Ground_Clearance" value={{ground_clearance}} class='form-control bg-light border-0'  style="height: 55px;" required>
                 </div>
           </div>
           </div>
@@ -145,33 +144,33 @@
               <div class="row">
                 <div class="col">
                   <label for="col1-row1">cc</label>
-                  <input type="number" name="cc" class='form-control bg-light border-0'  style="height: 55px;" value={{cc}}>
+                  <input type="number" min="100" name="cc" class='form-control bg-light border-0'  style="height: 55px;" value={{cc}} required>
                 </div>
                 <div class="col">
                   <label for="col2-row1">Fuel System Type</label>
-                  <input type="text" name="fuel_system_type" class='form-control bg-light border-0'  style="height: 55px;" value={{fuel_system_type}}>
+                  <input type="text" name="fuel_system_type" class='form-control bg-light border-0'  style="height: 55px;" value={{fuel_system_type}} required>
                 </div>
                 <div class="col">
                   <label for="col3-row1">Capacity</label>
-                  <input type="number" name="capacity" class='form-control bg-light border-0'  style="height: 55px;" value={{fcapacity}}>
+                  <input type="number" min="5" name="capacity" class='form-control bg-light border-0'  style="height: 55px;" value={{capacity}} required>
                 </div>
                 <div class="col">
                   <label for="col4-row1">Fuel Type</label>
-                  <input type="text" name="fuel_type" class='form-control bg-light border-0'  style="height: 55px;" value={{fuel_type}}>
+                  <input type="text" name="fuel_type" class='form-control bg-light border-0'  style="height: 55px;" value={{fuel_type}} required>
                 </div>
               </div>
               <div class="row">
                   <div class="col">
                       <label for="col1-row2">No of Cylinders</label>
-                      <input type="number" name="no_of_cylinders" class='form-control bg-light border-0'  style="height: 55px;" value={{no_of_cylinders}}>
+                      <input type="number" min="1" name="no_of_cylinders" class='form-control bg-light border-0'  style="height: 55px;" value={{no_of_cylinders}} required>
                     </div>
                     <div class="col">
                       <label for="col2-row2">Valves per Cylinder</label>
-                      <input type="number" name="valves_per_cylinder" class='form-control bg-light border-0'  style="height: 55px;" value={{valves_per_cylinder}}>
+                      <input type="number" min="1" name="valves_per_cylinder" class='form-control bg-light border-0'  style="height: 55px;" value={{valves_per_cylinder}} required>
                     </div>
                     <div class="col">
                       <label for="col3-row2">Configuration</label>
-                      <input type="text" name="config" class='form-control bg-light border-0'  style="height: 55px;" value={{config}}>
+                      <input type="text" name="config" class='form-control bg-light border-0'  style="height: 55px;" value={{config}} required>
                     </div> 
               </div>
               </div>  
@@ -184,6 +183,91 @@
         </form>
       </div></div>
         {% endif %}
+
+        <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
+      <div class="container">
+          <div class="row gx-5">
+              <div class="col-lg-4 col-md-6 footer-about">
+                  <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
+                      <a href="index.html" class="navbar-brand">
+                          <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>Carz</h1>
+                      </a>
+                      <p class="mt-2 mb-4">Welcome to our car data analytics website, where we offer a comprehensive and insightful look into the world of cars through the lens of data analysis. As the automotive industry continues to evolve, the amount of data being generated by cars is increasing at an unprecedented rate. From performance and safety to user experience and environmental impact, data is changing the way we drive, maintain and even design cars. </p>
+                     
+                  </div>
+              </div>
+              <div class="col-lg-8 col-md-6">
+                  <div class="row gx-5">
+                      <div class="col-lg-4 col-md-12 pt-5 mb-5">
+                          <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                              <h3 class="text-light mb-0">Get In Touch</h3>
+                          </div>
+                          <div class="d-flex mb-2">
+                              <i class="bi bi-geo-alt text-primary me-2"></i>
+                              <p class="mb-0">Banglore, Karnataka</p>
+                          </div>
+                          <div class="d-flex mb-2">
+                              <i class="bi bi-envelope-open text-primary me-2"></i>
+                              <p class="mb-0">cars@example.com</p>
+                          </div>
+                          <div class="d-flex mb-2">
+                              <i class="bi bi-telephone text-primary me-2"></i>
+                              <p class="mb-0">+919123457895</p>
+                          </div>
+                          <div class="d-flex mt-4">
+                              <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                              <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                              <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                              <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                          </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                          <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                              <h3 class="text-light mb-0">Key Features</h3>
+                          </div>
+                          <div class="link-animated d-flex flex-column justify-content-start">
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Data Import</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Data Cleaning</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Data Modeling</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Visualisation</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Dashboards</a>
+                              <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Report Generation</a>
+                          </div>
+                      </div>
+                      <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                          <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                              <h3 class="text-light mb-0">Key Features</h3>
+                          </div>
+                          <div class="link-animated d-flex flex-column justify-content-start">
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Sentimental Analysis</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Natural Language query</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Data Security</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Data Refresh</a>
+                              <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Charts Generation</a>
+                              <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Collaboration</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="container-fluid text-white" style="background: #061429;">
+      <div class="container text-center">
+          <div class="row justify-content-end">
+              <div class="col-lg-8 col-md-6">
+                  <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
+                      <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
+                      
+                      <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                      Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Footer End -->
 <style>
 
 label {

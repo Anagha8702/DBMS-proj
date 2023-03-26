@@ -90,11 +90,14 @@ def edit_profile(request):
 			messages.success(request, ('You have edited your profile'))
 			return redirect('home')
 	else: 		#passes in user information 
-	
+		admin_obj = Admin.objects.get(Admin_ID_id=request.user)
 		form = EditProfileForm(instance= request.user)
-	context = {'form': form,
-	 }
-	return render(request, 'authenticate/edit_profile.html', context)
+		v1 = admin_obj.address
+		v2 = admin_obj.Phone_no
+		context = {'form': form, 'sal':admin_obj.salary,'addr1': v1[:len(v1)-1],'ph1' :v2[:len(v2)-1],
+	 	}
+		print(admin_obj.address, admin_obj.salary)
+		return render(request, 'authenticate/edit_profile.html', context)
 	#return render(request, 'authenticate/edit_profile.html',{})
 
 
@@ -147,7 +150,7 @@ def customer_view(request):
 				return render(request, 'customer.html',{'form': form, 'show':0,'error':1,'errormsg':"Register Car Details First"})		
 			bought_by_obj = Bought_by.objects.create(Car_ID=car_obj,Customer_ID=customer_obj1,rating=rate)
 			try:
-				cred = credentials.Certificate("C:\\Users\\Anagha Anand\\Documents\\DBMS_PROJECT\\car\\car_app\\a.json")
+				cred = credentials.Certificate(r"car_app/a.json")
 				firebase_admin.initialize_app(cred, {'databaseURL': 'https://cardata-413aa-default-rtdb.asia-southeast1.firebasedatabase.app'})
 				ref = db.reference("/Data")
 				ref1 = ref.child(str(car_obj.Car_ID))
@@ -178,6 +181,7 @@ def add_car(request):
 			body_obj.body_type = request.POST['Body_Type']
 			body_obj.no_of_doors = request.POST['no_of_doors']
 			body_obj.save()
+			body_obj = Body.objects.filter(boot_space=request.POST['Boot_Space'], ground_clearance=request.POST['Ground_Clearance'], body_type = request.POST['Body_Type'],no_of_doors=request.POST['no_of_doors']).first()
 		cylinder_obj = Cylinder.objects.filter(no_of_cylinders=request.POST['no_of_cylinders'],config=request.POST['config'], valves_per_cylinder=request.POST['valves_per_cylinder']).first()
 		if cylinder_obj==None:
 			cylinder_obj = Cylinder()
@@ -185,6 +189,7 @@ def add_car(request):
 			cylinder_obj.no_of_cylinders  = request.POST['no_of_cylinders']
 			cylinder_obj.valves_per_cylinder  = request.POST['valves_per_cylinder']
 			cylinder_obj.save()
+			cylinder_obj = Cylinder.objects.filter(no_of_cylinders=request.POST['no_of_cylinders'],config=request.POST['config'], valves_per_cylinder=request.POST['valves_per_cylinder']).first()
 		print(cylinder_obj.id)
 		engine_obj = Engine.objects.filter(cc=request.POST['cc'], fuel_system_type=request.POST['fuel_system_type'], capacity = request.POST['capacity'],fuel_type=request.POST['fuel_type'], id = cylinder_obj).first()
 		if engine_obj==None:
@@ -195,6 +200,7 @@ def add_car(request):
 			engine_obj.fuel_type=request.POST['fuel_type']
 			engine_obj.id = cylinder_obj
 			engine_obj.save()
+			engine_obj = Engine.objects.filter(cc=request.POST['cc'], fuel_system_type=request.POST['fuel_system_type'], capacity = request.POST['capacity'],fuel_type=request.POST['fuel_type'], id = cylinder_obj).first()
 		obj1 = Car()
 		obj1.variant = request.POST['variant']
 		obj1.Model = request.POST['Model']
@@ -277,7 +283,7 @@ def home(request):
 			cid = request.POST.get('id')
 			print(cid)
 			try:
-				cred = credentials.Certificate("C:\\Users\\Anagha Anand\\Documents\\DBMS_PROJECT\\car\\car_app\\a.json")
+				cred = credentials.Certificate(r"car_app/a.json")
 				firebase_admin.initialize_app(cred, {'databaseURL': 'https://cardata-413aa-default-rtdb.asia-southeast1.firebasedatabase.app'})
 				ref = db.reference("/Data")
 				car_reviews_ref = ref.child(str(cid))

@@ -19,9 +19,9 @@ class EditProfileForm(UserChangeForm):
 		self.fields['email'].widget.attrs['class'] = 'form-control'
 
 class SignUpForm(UserCreationForm):
-	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}),)
-	first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
-	last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
+	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'Email Address'}),)
+	first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'First Name'}))
+	last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'Last Name'}))
 
 	class Meta:
 		model = User
@@ -49,11 +49,10 @@ class SignUpForm(UserCreationForm):
 
 class CustomerForm(forms.Form):
 	CHOICES =(
-	(" ", " "),
     ("F", "F"),
     ("M", "M"),
 )
 	name = forms.CharField(label='Your Name', max_length=100, widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'Name'}),)
-	lisence = forms.IntegerField(label=' License Number', widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'License No'}),)
-	age = forms.IntegerField(label='Age', widget=forms.TextInput(attrs={'class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'Age'}),)
+	lisence = forms.IntegerField(label=' License Number', widget=forms.NumberInput(attrs={'min':'100000','class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'License No'}),)
+	age = forms.IntegerField(label='Age',  widget=forms.NumberInput(attrs={'min':'18','class':'form-control bg-light border-0','style':"height: 55px;", 'placeholder':'Age'}),)
 	gender = forms.ChoiceField(label='Gender',choices = CHOICES, widget=forms.Select(choices = CHOICES,attrs={'class':'form-select bg-light border-0','style':"height: 55px;"}),)
